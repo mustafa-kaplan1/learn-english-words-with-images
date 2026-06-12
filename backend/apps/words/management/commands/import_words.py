@@ -25,8 +25,8 @@ class Command(BaseCommand):
         created = 0
         skipped = 0
 
-        with open(path, encoding="utf-8") as f:
-            reader = csv.DictReader(f)
+        with open(path, encoding="latin-1") as f:
+            reader = csv.DictReader(f, delimiter=";")
             for row in reader:
                 english = row.get("english", "").strip()
                 turkish = row.get("turkish", "").strip()
