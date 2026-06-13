@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { getWordSession, updateScore, getWordImages } from "../api/endpoints";
 
 export default function WordLearn() {
@@ -13,12 +13,24 @@ export default function WordLearn() {
 	const [sessionDone, setSessionDone] = useState(false);
 	const [transitioning, setTransitioning] = useState(false);
 	const timeoutRef = useRef(null);
+	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const isCustomMode = searchParams.get("mode") === "custom";
 
 	useEffect(() => {
-		getWordSession()
-			.then((res) => setWords(res.data))
-			.catch(() => setError("Kelimeler yüklenemedi."))
-			.finally(() => setLoading(false));
+		if (isCustomMode) {
+			const raw = sessionStorage.getItem("customSet");
+			if (!raw) { navigate("/library"); return; }
+			const customWords = JSON.parse(raw);
+			// WordLearn score bilgisi olmadan çalışır, score=0 varsayılan
+			setWords(customWords.map((w) => ({ ...w, score: 0 })));
+			setLoading(false);
+		} else {
+			getWordSession()
+				.then((res) => setWords(res.data))
+				.catch(() => setError("Kelimeler yüklenemedi."))
+				.finally(() => setLoading(false));
+		}
 
 		return () => clearTimeout(timeoutRef.current);
 	}, []);
