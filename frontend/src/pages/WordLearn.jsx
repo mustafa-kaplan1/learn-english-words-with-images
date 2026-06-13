@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getWordSession, updateScore, getWordImages } from "../api/endpoints";
 
@@ -11,16 +11,18 @@ export default function WordLearn() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [sessionDone, setSessionDone] = useState(false);
+  const [transitioning, setTransitioning] = useState(false);
+  const timeoutRef = useRef(null);
 
-  // Oturumu başlat
   useEffect(() => {
     getWordSession()
       .then((res) => setWords(res.data))
       .catch(() => setError("Kelimeler yüklenemedi."))
       .finally(() => setLoading(false));
+
+    return () => clearTimeout(timeoutRef.current);
   }, []);
 
-  // Kart çevrilince görselleri çek
   useEffect(() => {
     if (!flipped || !words[index]) return;
     setImages([]);
@@ -31,19 +33,24 @@ export default function WordLearn() {
       .finally(() => setLoadingImages(false));
   }, [flipped, index]);
 
-  const handleScore = async (action) => {
+  const handleScore = (action) => {
+    if (transitioning) return;
     const word = words[index];
-    // Arka planda puan gönder, kullanıcıyı beklettme
     updateScore(word.id, action).catch(() => {});
 
-    // Sonraki karta geç
-    if (index + 1 >= words.length) {
-      setSessionDone(true);
-    } else {
-      setIndex((i) => i + 1);
-      setFlipped(false);
-      setImages([]);
-    }
+    // Önce kartı kapat (animasyon: 550ms), sonra bir sonraki kelimeye geç
+    setTransitioning(true);
+    setFlipped(false);
+    setImages([]);
+
+    timeoutRef.current = setTimeout(() => {
+      if (index + 1 >= words.length) {
+        setSessionDone(true);
+      } else {
+        setIndex((i) => i + 1);
+      }
+      setTransitioning(false);
+    }, 580); // flip animasyonu bittikten sonra
   };
 
   if (loading) return <div className="loading">Kelimeler yükleniyor...</div>;
@@ -59,14 +66,16 @@ export default function WordLearn() {
         <span className="wl-progress">{index + 1} / {words.length}</span>
       </div>
 
-      {/* Progress bar */}
       <div className="wl-bar">
         <div className="wl-bar-fill" style={{ width: `${((index + 1) / words.length) * 100}%` }} />
       </div>
 
-      {/* Kart */}
-      <div className={`wl-card ${flipped ? "flipped" : ""}`} onClick={() => !flipped && setFlipped(true)}>
+      <div
+        className={`wl-card ${flipped ? "flipped" : ""}`}
+        onClick={() => !flipped && !transitioning && setFlipped(true)}
+      >
         <div className="wl-card-inner">
+
           {/* Ön yüz */}
           <div className="wl-front">
             <p className="wl-hint">Karta tıkla →</p>
@@ -76,22 +85,34 @@ export default function WordLearn() {
 
           {/* Arka yüz */}
           <div className="wl-back-face">
-            <h3 className="wl-turkish">{word.turkish}</h3>
+            <div className="wl-back-header">
+              <span className="wl-back-english">{word.english}</span>
+              <h3 className="wl-turkish">{word.turkish}</h3>
+            </div>
+
             <div className="wl-images">
-              {loadingImages && <p className="wl-img-loading">Görseller yükleniyor...</p>}
-              {images.map((url, i) => (
-                <img key={i} src={url} alt={word.english} className="wl-img" />
-              ))}
-              {!loadingImages && images.length === 0 && (
-                <p className="wl-img-loading">Görsel bulunamadı.</p>
+              {loadingImages && (
+                <div className="wl-img-loading">Görseller yükleniyor...</div>
               )}
+              {!loadingImages && images.length === 0 && (
+                <div className="wl-img-loading">Görsel bulunamadı.</div>
+              )}
+              {images.map((url, i) => (
+                <div key={i} className="wl-img-wrap">
+                  <img
+                    src={url}
+                    alt={word.english}
+                    className="wl-img"
+                  />
+                </div>
+              ))}
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* Puanlama butonları */}
-      {flipped && (
+      {flipped && !transitioning && (
         <div className="wl-buttons">
           <button className="wl-btn wl-dont" onClick={() => handleScore("dont_know")}>
             😕 Bilmiyorum
@@ -114,8 +135,11 @@ function SessionDone({ total }) {
       <h2>🎉 Oturum tamamlandı!</h2>
       <p>{total} kelimeyi gözden geçirdin.</p>
       <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
-        <Link to="/word-learn" className="wl-done-btn primary"
-          onClick={() => window.location.reload()}>
+        <Link
+          to="/word-learn"
+          className="wl-done-btn primary"
+          onClick={() => window.location.reload()}
+        >
           Tekrar başlat
         </Link>
         <Link to="/" className="wl-done-btn">Ana sayfa</Link>

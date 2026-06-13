@@ -126,15 +126,36 @@ def _fetch_from_pexels(query):
     if not api_key:
         return []
 
-    try:
-        response = requests.get(
-            PEXELS_SEARCH_URL,
-            headers={"Authorization": api_key},
-            params={"query": query, "per_page": IMAGE_COUNT, "locale": "en-US"},
-            timeout=5,
-        )
-        response.raise_for_status()
-        photos = response.json().get("photos", [])
-        return [p["src"]["medium"] for p in photos]
-    except requests.RequestException:
-        return []
+    orientations = ["square", "landscape", "portrait"]
+    collected = []
+    seen_ids = set()
+
+    for orientation in orientations:
+        if len(collected) >= IMAGE_COUNT:
+            break
+
+        needed = IMAGE_COUNT - len(collected)
+        try:
+            response = requests.get(
+                PEXELS_SEARCH_URL,
+                headers={"Authorization": api_key},
+                params={
+                    "query": query,
+                    "per_page": needed + 2,  # biraz fazla iste, duplicate'leri eleyeceğiz
+                    "locale": "en-US",
+                    "orientation": orientation,
+                },
+                timeout=5,
+            )
+            response.raise_for_status()
+            photos = response.json().get("photos", [])
+
+            for p in photos:
+                if p["id"] not in seen_ids and len(collected) < IMAGE_COUNT:
+                    seen_ids.add(p["id"])
+                    collected.append(p["src"]["medium"])
+
+        except requests.RequestException:
+            continue
+
+    return collected
