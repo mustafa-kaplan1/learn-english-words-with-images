@@ -31,3 +31,25 @@ class ProfileView(APIView):
 
     def get(self, request):
         return Response(UserSerializer(request.user).data)
+    
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        current = request.data.get("current_password")
+        new = request.data.get("new_password")
+
+        if not request.user.check_password(current):
+            return Response(
+                {"detail": "Mevcut şifre yanlış."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not new or len(new) < 8:
+            return Response(
+                {"detail": "Yeni şifre en az 8 karakter olmalı."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        request.user.set_password(new)
+        request.user.save()
+        return Response({"detail": "Şifre güncellendi."})

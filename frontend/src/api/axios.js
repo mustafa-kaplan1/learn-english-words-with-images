@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/api",
+  baseURL: "/api",
 });
 
 // Her isteğe otomatik token ekle
@@ -20,10 +20,7 @@ api.interceptors.response.use(
       original._retry = true;
       try {
         const refresh = localStorage.getItem("refresh");
-        const { data } = await axios.post(
-          "http://127.0.0.1:8000/api/auth/refresh/",
-          { refresh }
-        );
+        const { data } = await axios.post("/api/auth/refresh/", { refresh });
         localStorage.setItem("access", data.access);
         original.headers.Authorization = `Bearer ${data.access}`;
         return api(original);

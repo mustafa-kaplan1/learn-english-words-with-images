@@ -380,3 +380,117 @@ body {
   border-color: var(--accent);
 }
 
+/* ── Kelime Kitaplığı ── */
+.lib-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.lib-header {
+  margin-bottom: 1.5rem;
+}
+
+.lib-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.lib-filter-btn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lib-filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.lib-filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.lib-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lib-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: border-color 0.15s;
+}
+
+.lib-item:hover { border-color: var(--accent); }
+
+.lib-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.lib-english { font-weight: 700; font-size: 1rem; }
+.lib-turkish { font-size: 0.82rem; color: var(--text-muted); }
+
+.lib-item-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+}
+
+.lib-score { font-weight: 700; font-size: 1rem; }
+.lib-label { font-size: 0.72rem; }
+
+.lib-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+
+/* ── Settings ── */
+.settings-page {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.settings-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.settings-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.settings-label { font-size: 0.9rem; color: var(--text-muted); }
+.settings-value { font-size: 0.9rem; font-weight: 600; }
+
