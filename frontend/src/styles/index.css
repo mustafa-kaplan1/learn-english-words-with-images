@@ -1,0 +1,7 @@
+/* Ana CSS Birleştirici */
+@import "./variables.css";
+@import "./auth.css";
+@import "./home.css";
+@import "./wordlearn.css";
+@import "./library.css";
+@import "./settings.css";

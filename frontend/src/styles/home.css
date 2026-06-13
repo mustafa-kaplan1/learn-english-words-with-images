@@ -1,0 +1,86 @@
+.home-page {
+	max-width: 700px;
+	margin: 0 auto;
+	padding: 2rem 1rem;
+}
+
+.home-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+}
+
+.home-header h1 {
+	font-size: 1.4rem;
+}
+
+.btn-logout {
+	background: none;
+	border: 1px solid var(--border);
+	color: var(--text-muted);
+	padding: 0.4rem 1rem;
+	border-radius: 8px;
+	cursor: pointer;
+	font-size: 0.85rem;
+	transition: border-color 0.2s;
+}
+
+.btn-logout:hover {
+	border-color: var(--danger);
+	color: var(--danger);
+}
+
+.home-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 1rem;
+}
+
+.home-card {
+	background: var(--bg-card);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 1.5rem;
+	cursor: pointer;
+	transition: border-color 0.2s, transform 0.15s;
+	text-decoration: none;
+	color: var(--text);
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.home-card:hover {
+	border-color: var(--accent);
+	transform: translateY(-2px);
+}
+
+.home-card.disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+	pointer-events: none;
+}
+
+.home-card .card-icon {
+	font-size: 2rem;
+}
+
+.home-card .card-title {
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+.home-card .card-desc {
+	font-size: 0.82rem;
+	color: var(--text-muted);
+}
+
+.home-card .card-badge {
+	font-size: 0.7rem;
+	background: var(--bg-hover);
+	color: var(--text-muted);
+	padding: 0.2rem 0.5rem;
+	border-radius: 20px;
+	width: fit-content;
+}

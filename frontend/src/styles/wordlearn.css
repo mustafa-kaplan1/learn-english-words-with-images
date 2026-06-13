@@ -1,0 +1,271 @@
+.wl-page {
+	max-width: 900px;
+	margin: 0 auto;
+	padding: 1.5rem 1rem;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.wl-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem;
+}
+
+.wl-back {
+	color: var(--text-muted);
+	text-decoration: none;
+	font-size: 0.9rem;
+}
+
+.wl-back:hover {
+	color: var(--text);
+}
+
+.wl-progress {
+	font-size: 0.85rem;
+	color: var(--text-muted);
+}
+
+.wl-bar {
+	height: 4px;
+	background: var(--border);
+	border-radius: 99px;
+	margin-bottom: 2rem;
+	overflow: hidden;
+}
+
+.wl-bar-fill {
+	height: 100%;
+	background: var(--accent);
+	border-radius: 99px;
+	transition: width 0.4s ease;
+}
+
+.wl-content {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	flex: 1;
+}
+
+/* Kart flip mekanizması */
+.wl-card {
+	perspective: 1200px;
+	cursor: pointer;
+	height: 500px;
+	width: 100%;
+}
+
+.wl-card-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
+	border-radius: var(--radius);
+}
+
+.wl-card.flipped .wl-card-inner {
+	transform: rotateY(180deg);
+}
+
+.wl-front,
+.wl-back-face {
+	position: absolute;
+	inset: 0;
+	backface-visibility: hidden;
+	border-radius: var(--radius);
+	border: 1px solid var(--border);
+	background: var(--bg-card);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1.2rem;
+	overflow: hidden;
+}
+
+.wl-back-face {
+	transform: rotateY(180deg);
+	justify-content: flex-start;
+	gap: 0.6rem;
+}
+
+.wl-back-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.2rem;
+	width: 100%;
+	flex-shrink: 0;
+}
+
+.wl-back-english {
+	font-size: 0.8rem;
+	color: var(--text-muted);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.wl-turkish {
+	font-size: 1.2rem;
+	font-weight: 700;
+	text-align: center;
+	width: 100%;
+	margin: 0;
+}
+
+.wl-images {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	gap: 0.5rem;
+	width: 100%;
+	flex: 1;
+	min-height: 0;
+}
+
+.wl-img-wrap {
+	border-radius: 8px;
+	overflow: hidden;
+	min-height: 0;
+}
+
+.wl-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	display: block;
+}
+
+.wl-img-loading {
+	color: var(--text-muted);
+	font-size: 0.85rem;
+	grid-column: 1 / -1;
+	text-align: center;
+	padding: 1rem 0;
+	align-self: center;
+}
+
+/* Kontrol Butonları */
+.wl-buttons {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+
+.wl-btn {
+	padding: 0.85rem 0.5rem;
+	border: none;
+	border-radius: 10px;
+	font-size: 0.88rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: opacity 0.15s, transform 0.1s;
+	width: 100%;
+	flex: 1;
+}
+
+.wl-btn:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+}
+
+.wl-btn:active:not(:disabled) {
+	transform: scale(0.97);
+}
+
+.wl-dont {
+	background: #3b1212;
+	color: #fca5a5;
+}
+
+.wl-unsure {
+	background: #2d2208;
+	color: #fcd34d;
+}
+
+.wl-know {
+	background: #052e16;
+	color: #86efac;
+}
+
+.wl-dont:hover:not(:disabled) {
+	background: #4c1515;
+}
+
+.wl-unsure:hover:not(:disabled) {
+	background: #3d2e0a;
+}
+
+.wl-know:hover:not(:disabled) {
+	background: #063d1e;
+}
+
+/* Oturum Sonu (Done) Alanı */
+.wl-done {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	text-align: center;
+	padding: 2rem;
+}
+
+.wl-done h2 {
+	font-size: 1.8rem;
+	margin-bottom: 0.5rem;
+}
+
+.wl-done p {
+	color: var(--text-muted);
+}
+
+.wl-done-btn {
+	padding: 0.75rem 1.5rem;
+	border-radius: 8px;
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 0.95rem;
+	background: var(--bg-card);
+	color: var(--text);
+	border: 1px solid var(--border);
+}
+
+.wl-done-btn.primary {
+	background: var(--accent);
+	color: #fff;
+	border-color: var(--accent);
+}
+
+/* Responsive Düzen */
+@media (min-width: 700px) {
+	.wl-content {
+		flex-direction: row;
+		align-items: stretch;
+	}
+
+	.wl-card {
+		flex: 1;
+		height: auto;
+		min-height: 500px;
+	}
+
+	.wl-buttons {
+		flex-direction: column;
+		justify-content: center;
+		width: 180px;
+		flex-shrink: 0;
+	}
+
+	.wl-btn {
+		padding: 1.2rem 0.5rem;
+		font-size: 0.9rem;
+	}
+}
