@@ -4,7 +4,7 @@ from django.conf import settings
 
 class Word(models.Model):
     english = models.CharField(max_length=200, unique=True)
-    turkish = models.CharField(max_length=200)
+    turkish = models.JSONField(default=list)  # ["terk etmek", "bırakmak", "vazgeçmek"]
     level = models.CharField(max_length=10, blank=True, default="")
     part_of_speech = models.CharField(max_length=50, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,7 +15,7 @@ class Word(models.Model):
         ordering = ["english"]
 
     def __str__(self):
-        return f"{self.english} — {self.turkish}"
+        return f"{self.english} — {', '.join(self.turkish)}"
 
 
 class UserWord(models.Model):
