@@ -19,3 +19,6 @@ export const getWordImages = (word_id) =>
   api.get(`/words/images/${word_id}/`);
 
 export const getLibrary = () => api.get("/words/library/");
+
+export const getUserSettings = () => api.get("/auth/settings/");
+export const updateUserSettings = (data) => api.patch("/auth/settings/", data);

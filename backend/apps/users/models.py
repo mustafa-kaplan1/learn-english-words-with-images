@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -35,3 +36,17 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+class UserSettings(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="settings",
+    )
+    set_size = models.IntegerField(default=32)
+
+    class Meta:
+        verbose_name = "Kullanıcı Ayarları"
+
+    def __str__(self):
+        return f"{self.user.email} — set:{self.set_size}"

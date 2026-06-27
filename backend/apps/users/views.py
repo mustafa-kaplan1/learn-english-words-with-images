@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from .serializers import RegisterSerializer, UserSerializer
+from .models import UserSettings
+from .serializers import RegisterSerializer, UserSerializer, UserSettingsSerializer
 
 
 class RegisterView(APIView):
@@ -53,3 +54,18 @@ class ChangePasswordView(APIView):
         request.user.set_password(new)
         request.user.save()
         return Response({"detail": "Şifre güncellendi."})
+
+class UserSettingsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        obj, _ = UserSettings.objects.get_or_create(user=request.user)
+        return Response(UserSettingsSerializer(obj).data)
+
+    def patch(self, request):
+        obj, _ = UserSettings.objects.get_or_create(user=request.user)
+        serializer = UserSettingsSerializer(obj, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

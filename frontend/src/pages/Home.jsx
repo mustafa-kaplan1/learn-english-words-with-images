@@ -1,48 +1,56 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-const cards = [
-  {
-    to: "/word-learn",
-    icon: "🧠",
-    title: "Word Learn",
-    desc: "32 kelimelik oturum başlat",
-    disabled: false,
-  },
-  {
-    to: "/library",
-    icon: "📚",
-    title: "Kelime Kitaplığı",
-    desc: "Tüm kelimelerin ve puanların",
-    disabled: false,
-  },
-  {
-    to: "/grammar",
-    icon: "✏️",
-    title: "Grammar",
-    desc: "Gramer konuları",
-    badge: "Yakında",
-    disabled: true,
-  },
-  {
-    to: "/grammar-library",
-    icon: "🗂️",
-    title: "Gramer Kitaplığı",
-    desc: "Gramer notların",
-    badge: "Yakında",
-    disabled: true,
-  },
-  {
-    to: "/settings",
-    icon: "⚙️",
-    title: "Ayarlar",
-    desc: "Hesap ve tercihler",
-    disabled: false,
-  },
-];
+import { getUserSettings } from "../api/endpoints";
 
 export default function Home() {
   const { user, logoutUser } = useAuth();
+  const [setSize, setSetSize] = useState(null);
+
+  useEffect(() => {
+    getUserSettings().then((res) => setSetSize(res.data.set_size));
+  }, []);
+
+  const cards = [
+    {
+      to: "/word-learn",
+      icon: "🧠",
+      title: "Word Learn",
+      desc: "Kelime oturumu başlat",
+      badge: setSize ? `${setSize} kelimelik set` : null,
+      disabled: false,
+    },
+    {
+      to: "/library",
+      icon: "📚",
+      title: "Kelime Kitaplığı",
+      desc: "Tüm kelimelerin ve puanların",
+      disabled: false,
+    },
+    {
+      to: "/grammar",
+      icon: "✏️",
+      title: "Grammar",
+      desc: "Gramer konuları",
+      badge: "Yakında",
+      disabled: true,
+    },
+    {
+      to: "/grammar-library",
+      icon: "🗂️",
+      title: "Gramer Kitaplığı",
+      desc: "Gramer notların",
+      badge: "Yakında",
+      disabled: true,
+    },
+    {
+      to: "/settings",
+      icon: "⚙️",
+      title: "Ayarlar",
+      desc: "Hesap ve tercihler",
+      disabled: false,
+    },
+  ];
 
   return (
     <div className="home-page">
@@ -70,6 +78,7 @@ export default function Home() {
               <span className="card-icon">{card.icon}</span>
               <span className="card-title">{card.title}</span>
               <span className="card-desc">{card.desc}</span>
+              {card.badge && <span className="card-badge">{card.badge}</span>}
             </Link>
           )
         )}

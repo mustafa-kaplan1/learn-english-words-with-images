@@ -12,56 +12,60 @@ GROUP3_LIMIT = 10   # 0 < score < 10
 SESSION_SIZE = 32
 
 
-# ── 32 Kelimelik Set Algoritması ────────────────────────────────
 def get_session_words(user):
-    """
-    Kullanıcıya özel 32 kelimelik oturum seti döner.
+    from apps.users.models import UserSettings
 
-    Grup 1: score = -1  → max 10
-    Grup 2: score = 0   → max 12
-    Grup 3: 0 < score < 10, küçükten büyüğe → max 10
+    settings_obj, _ = UserSettings.objects.get_or_create(user=user)
+    session_size = settings_obj.set_size
 
-    Eksik kalan kontenjan her zaman Grup 2 (score=0 / görülmemiş)
-    ile tamamlanır ve toplam 32'ye eşitlenir.
-    """
-    # Kullanıcının kayıtlı kelimeleri
+    per_group = session_size // 4  # her grup %25
+
     user_words = UserWord.objects.filter(user=user).select_related("word")
     scored = {uw.word_id: uw.score for uw in user_words}
 
-    # Grup 1: -1 puanlılar
-    g1_ids = [wid for wid, s in scored.items() if s == SCORE_MIN]
-    g1 = list(Word.objects.filter(id__in=g1_ids))[:GROUP1_LIMIT]
+    # Bilmediğim: score <= 0 (ve score != yeni, yani kaydı var)
+    g_unknown_ids = [wid for wid, s in scored.items() if s <= 0]
+    g_unknown = list(Word.objects.filter(id__in=g_unknown_ids))[:per_group]
 
-    # Grup 3: 0 < score < 10, küçükten büyüğe
-    g3_uw = (
-        UserWord.objects.filter(user=user, score__gt=0, score__lt=SCORE_MAX)
+    # Öğrendiğim: 1-5
+    g_learning_uw = (
+        UserWord.objects.filter(user=user, score__gte=1, score__lte=5)
         .order_by("score")
-        .select_related("word")[:GROUP3_LIMIT]
+        .select_related("word")[:per_group]
     )
-    g3 = [uw.word for uw in g3_uw]
+    g_learning = [uw.word for uw in g_learning_uw]
 
-    # Kullanılan word id'leri
-    used_ids = {w.id for w in g1 + g3}
+    # İyi bildiğim: 6-9
+    g_good_uw = (
+        UserWord.objects.filter(user=user, score__gte=6, score__lte=9)
+        .order_by("score")
+        .select_related("word")[:per_group]
+    )
+    g_good = [uw.word for uw in g_good_uw]
 
-    # Grup 2: score = 0 olan kayıtlı kelimeler + hiç görülmemiş kelimeler
-    needed_g2 = SESSION_SIZE - len(g1) - len(g3)
+    used_ids = {w.id for w in g_unknown + g_learning + g_good}
 
-    # Önce kayıtlı score=0 olanlar
-    g2_registered_ids = [wid for wid, s in scored.items() if s == 0 and wid not in used_ids]
-    g2_registered = list(Word.objects.filter(id__in=g2_registered_ids))
-
-    # Yetmezse hiç UserWord kaydı olmayan kelimeler
+    # Yeni kelimeler: hiç UserWord kaydı olmayan
     all_seen_ids = set(scored.keys())
-    g2_unseen = list(
-        Word.objects.exclude(id__in=all_seen_ids).order_by("?")[:needed_g2]
+    needed_new = session_size - len(g_unknown) - len(g_learning) - len(g_good)
+    g_new = list(
+        Word.objects.exclude(id__in=all_seen_ids).order_by("?")[:needed_new]
     )
 
-    g2 = (g2_registered + g2_unseen)[:needed_g2]
+    session = g_unknown + g_learning + g_good + g_new
 
-    session = g1 + g2 + g3
+    # Hâlâ eksikse yeni kelimelerle tamamla
+    if len(session) < session_size:
+        extra_ids = used_ids | {w.id for w in g_new}
+        extra = list(
+            Word.objects.exclude(id__in=extra_ids).order_by("?")[: session_size - len(session)]
+        )
+        session += extra
 
-    # Kesinlikle 32'yi aşma (edge case guard)
-    return session[:SESSION_SIZE]
+    # Karıştır ve döndür
+    import random
+    random.shuffle(session)
+    return session[:session_size]
 
 
 # ── Puan Güncelleme ─────────────────────────────────────────────

@@ -1,59 +1,69 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
+import { getUserSettings, updateUserSettings } from "../api/endpoints";
+
+const SET_SIZES = [8, 16, 24, 32];
 
 export default function Settings() {
   const { user, logoutUser } = useAuth();
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
+  const [pwLoading, setPwLoading] = useState(false);
+  const [pwSuccess, setPwSuccess] = useState("");
+  const [pwError, setPwError] = useState("");
+
+  const [setSize, setSetSize] = useState(32);
+  const [settingsLoading, setSettingsLoading] = useState(true);
+  const [settingsSuccess, setSettingsSuccess] = useState("");
+
+  useEffect(() => {
+    getUserSettings()
+      .then((res) => setSetSize(res.data.set_size))
+      .finally(() => setSettingsLoading(false));
+  }, []);
+
+  const handleSetSize = async (size) => {
+    setSetSize(size);
+    setSettingsSuccess("");
+    try {
+      await updateUserSettings({ set_size: size });
+      setSettingsSuccess("Kaydedildi.");
+      setTimeout(() => setSettingsSuccess(""), 2000);
+    } catch {
+      // sessizce geç
+    }
+  };
 
   const handlePasswordChange = async () => {
-    setError("");
-    setSuccess("");
-
-    if (newPassword.length < 8) {
-      setError("Yeni şifre en az 8 karakter olmalı.");
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setError("Yeni şifreler eşleşmiyor.");
-      return;
-    }
-
-    setLoading(true);
+    setPwError("");
+    setPwSuccess("");
+    if (newPassword.length < 8) { setPwError("Yeni şifre en az 8 karakter olmalı."); return; }
+    if (newPassword !== confirmPassword) { setPwError("Yeni şifreler eşleşmiyor."); return; }
+    setPwLoading(true);
     try {
       await api.post("/auth/change-password/", {
         current_password: currentPassword,
         new_password: newPassword,
       });
-      setSuccess("Şifre başarıyla güncellendi.");
-      setCurrentPassword("");
-      setNewPassword("");
-      setConfirmPassword("");
+      setPwSuccess("Şifre başarıyla güncellendi.");
+      setCurrentPassword(""); setNewPassword(""); setConfirmPassword("");
     } catch (err) {
       const msg = err.response?.data;
-      if (typeof msg === "object") {
-        setError(Object.values(msg).flat().join(" "));
-      } else {
-        setError("Bir hata oluştu.");
-      }
+      setPwError(typeof msg === "object" ? Object.values(msg).flat().join(" ") : "Bir hata oluştu.");
     } finally {
-      setLoading(false);
+      setPwLoading(false);
     }
   };
 
   return (
     <div className="settings-page">
       <Link to="/" className="wl-back">← Ana sayfa</Link>
-
       <h1 style={{ marginTop: "1rem", marginBottom: "2rem" }}>Ayarlar</h1>
 
-      {/* Profil bilgisi */}
+      {/* Profil */}
       <div className="settings-card">
         <h2 className="settings-section-title">Profil</h2>
         <div className="settings-row">
@@ -62,48 +72,57 @@ export default function Settings() {
         </div>
       </div>
 
-      {/* Şifre değiştir */}
+      {/* Set büyüklüğü */}
       <div className="settings-card">
-        <h2 className="settings-section-title">Şifre değiştir</h2>
-
-        {error && <div className="error-msg">{error}</div>}
-        {success && (
-          <div className="error-msg" style={{ background: "#052e16", borderColor: "var(--success)", color: "#86efac" }}>
-            {success}
+        <h2 className="settings-section-title">Standart set büyüklüğü</h2>
+        <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginBottom: "1rem" }}>
+          Her grupta %25 yeni, %25 bilmediğin, %25 öğrendiğin, %25 iyi bildiğin kelime.
+        </p>
+        {settingsLoading ? (
+          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem" }}>Yükleniyor...</p>
+        ) : (
+          <div className="settings-sizes">
+            {SET_SIZES.map((s) => (
+              <button
+                key={s}
+                className={`settings-size-btn ${setSize === s ? "active" : ""}`}
+                onClick={() => handleSetSize(s)}
+              >
+                {s}
+              </button>
+            ))}
           </div>
         )}
+        {settingsSuccess && (
+          <p style={{ color: "var(--success)", fontSize: "0.85rem", marginTop: "0.8rem" }}>
+            {settingsSuccess}
+          </p>
+        )}
+      </div>
 
+      {/* Şifre */}
+      <div className="settings-card">
+        <h2 className="settings-section-title">Şifre değiştir</h2>
+        {pwError && <div className="error-msg">{pwError}</div>}
+        {pwSuccess && (
+          <div className="error-msg" style={{ background: "#052e16", borderColor: "var(--success)", color: "#86efac" }}>
+            {pwSuccess}
+          </div>
+        )}
         <div className="form-group">
           <label>Mevcut şifre</label>
-          <input
-            type="password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-          />
+          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
         </div>
         <div className="form-group">
           <label>Yeni şifre</label>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
+          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
         </div>
         <div className="form-group">
           <label>Yeni şifre tekrar</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
+          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
         </div>
-
-        <button
-          className="btn btn-primary"
-          onClick={handlePasswordChange}
-          disabled={loading}
-        >
-          {loading ? "Güncelleniyor..." : "Şifreyi güncelle"}
+        <button className="btn btn-primary" onClick={handlePasswordChange} disabled={pwLoading}>
+          {pwLoading ? "Güncelleniyor..." : "Şifreyi güncelle"}
         </button>
       </div>
 
