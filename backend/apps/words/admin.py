@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Word, UserWord, WordImageCache
+from .models import Word, UserWord, WordImageCache, WordReport
 
 
 @admin.register(Word)
@@ -20,3 +20,14 @@ class UserWordAdmin(admin.ModelAdmin):
 class WordImageCacheAdmin(admin.ModelAdmin):
     list_display = ("word", "cached_at")
     search_fields = ("word__english",)
+    
+@admin.register(WordReport)
+class WordReportAdmin(admin.ModelAdmin):
+    list_display = ("word", "user", "faulty_images", "translation_error", "resolved", "created_at")
+    list_filter = ("resolved", "translation_error")
+    search_fields = ("word__english", "user__email")
+    actions = ["mark_resolved"]
+
+    def mark_resolved(self, request, queryset):
+        queryset.update(resolved=True)
+    mark_resolved.short_description = "Çözüldü olarak işaretle"

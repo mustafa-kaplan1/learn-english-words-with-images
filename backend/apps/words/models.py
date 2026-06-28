@@ -52,3 +52,28 @@ class WordImageCache(models.Model):
 
     def __str__(self):
         return f"Cache: {self.word.english}"
+    
+class WordReport(models.Model):
+    REPORT_TYPES = [
+        ("image", "Görsel Hatası"),
+        ("translation", "Çeviri Hatası"),
+        ("both", "Her İkisi"),
+    ]
+
+    word = models.ForeignKey(Word, on_delete=models.CASCADE, related_name="reports")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="reports",
+    )
+    faulty_images = models.JSONField(default=list)  # [0, 2] → 1. ve 3. görsel hatalı
+    translation_error = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Kelime Raporu"
+        verbose_name_plural = "Kelime Raporları"
+
+    def __str__(self):
+        return f"{self.word.english} — {self.user.email}"

@@ -1,271 +1,367 @@
+/* ── Word Learn ── */
 .wl-page {
-	max-width: 900px;
-	margin: 0 auto;
-	padding: 1.5rem 1rem;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .wl-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
-.wl-back {
-	color: var(--text-muted);
-	text-decoration: none;
-	font-size: 0.9rem;
-}
-
-.wl-back:hover {
-	color: var(--text);
-}
-
-.wl-progress {
-	font-size: 0.85rem;
-	color: var(--text-muted);
-}
+.wl-back { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+.wl-back:hover { color: var(--text); }
+.wl-progress { font-size: 0.85rem; color: var(--text-muted); }
 
 .wl-bar {
-	height: 4px;
-	background: var(--border);
-	border-radius: 99px;
-	margin-bottom: 2rem;
-	overflow: hidden;
+  height: 4px;
+  background: var(--border);
+  border-radius: 99px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
 }
 
 .wl-bar-fill {
-	height: 100%;
-	background: var(--accent);
-	border-radius: 99px;
-	transition: width 0.4s ease;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 0.4s ease;
 }
 
 .wl-content {
-	display: flex;
-	flex-direction: column;
-	gap: 1rem;
-	flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
 }
 
-/* Kart flip mekanizması */
+/* Kart flip — yükseklik içeriğe göre */
 .wl-card {
-	perspective: 1200px;
-	cursor: pointer;
-	height: 500px;
-	width: 100%;
+  perspective: 1200px;
+  cursor: pointer;
+  width: 100%;
 }
 
 .wl-card-inner {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	transform-style: preserve-3d;
-	transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
-	border-radius: var(--radius);
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  border-radius: var(--radius);
+}
+
+/* Ön ve arka yüz — her ikisi de flow içinde */
+.wl-front, .wl-back-face {
+  backface-visibility: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  padding: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ön yüz */
+.wl-front {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  position: relative;
+}
+
+/* Arka yüz — absolute + rotateY */
+.wl-back-face {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Kart döndüğünde yüksekliği arka yüze göre ayarla */
+.wl-card:not(.flipped) .wl-card-inner {
+  min-height: 280px;
 }
 
 .wl-card.flipped .wl-card-inner {
-	transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
-.wl-front,
-.wl-back-face {
-	position: absolute;
-	inset: 0;
-	backface-visibility: hidden;
-	border-radius: var(--radius);
-	border: 1px solid var(--border);
-	background: var(--bg-card);
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 1.2rem;
-	overflow: hidden;
-}
-
-.wl-back-face {
-	transform: rotateY(180deg);
-	justify-content: flex-start;
-	gap: 0.6rem;
+/* Arka yüz görünürken kart yüksekliğini tut */
+.wl-card-sizer {
+  visibility: hidden;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.5rem;
+  width: 100%;
 }
 
 .wl-back-header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.2rem;
-	width: 100%;
-	flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 100%;
+  flex-shrink: 0;
 }
 
 .wl-back-english {
-	font-size: 0.8rem;
-	color: var(--text-muted);
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.wl-turkish {
-	font-size: 1.2rem;
-	font-weight: 700;
-	text-align: center;
-	width: 100%;
-	margin: 0;
+.wl-turkish-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.wl-turkish-item {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
 }
 
 .wl-images {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-	gap: 0.5rem;
-	width: 100%;
-	flex: 1;
-	min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .wl-img-wrap {
-	border-radius: 8px;
-	overflow: hidden;
-	min-height: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
 }
 
 .wl-img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	object-position: center;
-	display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .wl-img-loading {
-	color: var(--text-muted);
-	font-size: 0.85rem;
-	grid-column: 1 / -1;
-	text-align: center;
-	padding: 1rem 0;
-	align-self: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1rem 0;
 }
 
-/* Kontrol Butonları */
+.wl-hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+.wl-word { font-size: 2.4rem; font-weight: 800; text-align: center; }
+.wl-badge {
+  margin-top: 0.8rem;
+  font-size: 0.75rem;
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+}
+
+/* Sağ panel */
+.wl-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
 .wl-buttons {
-	display: flex;
-	flex-direction: column;
-	gap: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
 .wl-btn {
-	padding: 0.85rem 0.5rem;
-	border: none;
-	border-radius: 10px;
-	font-size: 0.88rem;
-	font-weight: 600;
-	cursor: pointer;
-	transition: opacity 0.15s, transform 0.1s;
-	width: 100%;
-	flex: 1;
+  padding: 0.75rem 0.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  width: 100%;
 }
 
-.wl-btn:disabled {
-	opacity: 0.4;
-	cursor: not-allowed;
+.wl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.wl-btn:active:not(:disabled) { transform: scale(0.97); }
+.wl-dont   { background: #3b1212; color: #fca5a5; }
+.wl-unsure { background: #2d2208; color: #fcd34d; }
+.wl-know   { background: #052e16; color: #86efac; }
+.wl-dont:hover:not(:disabled)   { background: #4c1515; }
+.wl-unsure:hover:not(:disabled) { background: #3d2e0a; }
+.wl-know:hover:not(:disabled)   { background: #063d1e; }
+
+.wl-report-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 10px;
+  padding: 0.65rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+  margin-top: auto;
 }
 
-.wl-btn:active:not(:disabled) {
-	transform: scale(0.97);
+.wl-report-btn:hover {
+  border-color: var(--warning);
+  color: var(--warning);
 }
 
-.wl-dont {
-	background: #3b1212;
-	color: #fca5a5;
+@media (min-width: 700px) {
+  .wl-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .wl-card { flex: 1; }
+
+  .wl-side {
+    width: 180px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 1.5rem;
+  }
 }
 
-.wl-unsure {
-	background: #2d2208;
-	color: #fcd34d;
-}
-
-.wl-know {
-	background: #052e16;
-	color: #86efac;
-}
-
-.wl-dont:hover:not(:disabled) {
-	background: #4c1515;
-}
-
-.wl-unsure:hover:not(:disabled) {
-	background: #3d2e0a;
-}
-
-.wl-know:hover:not(:disabled) {
-	background: #063d1e;
-}
-
-/* Oturum Sonu (Done) Alanı */
+/* Oturum sonu */
 .wl-done {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	min-height: 100vh;
-	text-align: center;
-	padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
 }
 
-.wl-done h2 {
-	font-size: 1.8rem;
-	margin-bottom: 0.5rem;
-}
-
-.wl-done p {
-	color: var(--text-muted);
-}
+.wl-done h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.wl-done p  { color: var(--text-muted); }
 
 .wl-done-btn {
-	padding: 0.75rem 1.5rem;
-	border-radius: 8px;
-	text-decoration: none;
-	font-weight: 600;
-	font-size: 0.95rem;
-	background: var(--bg-card);
-	color: var(--text);
-	border: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .wl-done-btn.primary {
-	background: var(--accent);
-	color: #fff;
-	border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 
-/* Responsive Düzen */
+/* ── Rapor modalı ── */
+.report-modal {
+  max-width: 420px;
+  text-align: left;
+}
+
+.report-section {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.report-section-title {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.report-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.report-img-check {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.report-img-check input { display: none; }
+
+.report-img-check.checked {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.report-thumb {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.report-thumb-empty {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--bg-hover);
+  border-radius: 6px;
+}
+
+.report-translation-check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.report-translation-check input { width: 16px; height: 16px; cursor: pointer; }
+.report-translation-check:has(input:checked) { color: var(--warning); }
+
+.report-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+  width: 100%;
+}
+
+/* Masaüstünde rapor görselleri daha küçük */
 @media (min-width: 700px) {
-	.wl-content {
-		flex-direction: row;
-		align-items: stretch;
-	}
-
-	.wl-card {
-		flex: 1;
-		height: auto;
-		min-height: 500px;
-	}
-
-	.wl-buttons {
-		flex-direction: column;
-		justify-content: center;
-		width: 180px;
-		flex-shrink: 0;
-	}
-
-	.wl-btn {
-		padding: 1.2rem 0.5rem;
-		font-size: 0.9rem;
-	}
+  .report-thumb {
+    max-height: 80px;
+  }
 }

@@ -22,3 +22,6 @@ export const getLibrary = () => api.get("/words/library/");
 
 export const getUserSettings = () => api.get("/auth/settings/");
 export const updateUserSettings = (data) => api.patch("/auth/settings/", data);
+
+export const reportWord = (word_id, faulty_images, translation_error) =>
+  api.post("/words/report/", { word_id, faulty_images, translation_error });

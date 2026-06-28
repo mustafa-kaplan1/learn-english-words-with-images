@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Word
+from .models import Word, WordReport
 from .serializers import SessionWordSerializer, ScoreUpdateSerializer, UserWordSerializer
 from . import services
 
@@ -70,3 +70,27 @@ class LibraryView(APIView):
         )
         serializer = UserWordSerializer(user_words, many=True)
         return Response(serializer.data)
+
+class WordReportView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        word_id = request.data.get("word_id")
+        faulty_images = request.data.get("faulty_images", [])
+        translation_error = request.data.get("translation_error", False)
+
+        if not word_id:
+            return Response({"detail": "word_id zorunlu."}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            word = Word.objects.get(pk=word_id)
+        except Word.DoesNotExist:
+            return Response({"detail": "Kelime bulunamadı."}, status=status.HTTP_404_NOT_FOUND)
+
+        WordReport.objects.create(
+            word=word,
+            user=request.user,
+            faulty_images=faulty_images,
+            translation_error=translation_error,
+        )
+        return Response({"detail": "Rapor alındı."}, status=status.HTTP_201_CREATED)
