@@ -12,7 +12,7 @@ def get_translations(word: str, pos: str) -> list:
     queries = [
         word,
         f"{word} ({pos})" if pos else word,
-        f"to {word}" if is_verb else f"{word} olarak",
+        f"to {word}" if is_verb else f"{word} ile",
     ]
 
     results = []
@@ -24,6 +24,8 @@ def get_translations(word: str, pos: str) -> list:
             tr = tr.rstrip(".").strip()
 
             if not tr:
+                continue
+            if "olarak" in tr.lower():
                 continue
             if tr.lower() in [r.lower() for r in results]:
                 continue
@@ -39,7 +41,6 @@ def get_translations(word: str, pos: str) -> list:
         time.sleep(0.3)
 
     return results[:3]
-
 
 class Command(BaseCommand):
     help = "Oxford JSON + googletrans ile kelimeleri içe aktarır."

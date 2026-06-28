@@ -77,7 +77,6 @@ export default function Library() {
     if (!setSize) return;
     const pool = [...filtered].sort(() => Math.random() - 0.5);
     const chosen = setSize === "all" ? pool : pool.slice(0, setSize);
-    // Seçilen kelimeleri sessionStorage'a koy, WordLearn okuyacak
     sessionStorage.setItem("customSet", JSON.stringify(chosen.map((uw) => uw.word)));
     setShowModal(false);
     navigate("/word-learn?mode=custom");
@@ -112,9 +111,7 @@ export default function Library() {
       <div className="lib-result-bar">
         <p className="lib-result-count">{selectedLabels} — {filtered.length} kelime</p>
         {filtered.length > 0 && (
-          <button className="lib-set-btn" onClick={handleStartSet}>
-            Set oluştur →
-          </button>
+          <button className="lib-set-btn" onClick={handleStartSet}>Set oluştur →</button>
         )}
       </div>
 
@@ -132,7 +129,11 @@ export default function Library() {
             <div key={uw.id} className="lib-item">
               <div className="lib-item-left">
                 <span className="lib-english">{uw.word.english}</span>
-                <span className="lib-turkish">{uw.word.turkish}</span>
+                <span className="lib-turkish">
+                  {Array.isArray(uw.word.turkish)
+                    ? uw.word.turkish.join(", ")
+                    : uw.word.turkish}
+                </span>
               </div>
               <div className="lib-item-right">
                 <span className="lib-score" style={{ color: scoreColor(uw.score) }}>
@@ -147,13 +148,11 @@ export default function Library() {
         </div>
       )}
 
-      {/* Modal */}
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Kaç kelimelik set?</h2>
             <p className="modal-sub">Havuzda {filtered.length} kelime var.</p>
-
             <div className="modal-sizes">
               {SET_SIZES.map((size) => {
                 const disabled = filtered.length < size;
@@ -177,7 +176,6 @@ export default function Library() {
                 <span className="modal-size-sub">{filtered.length} kelime</span>
               </button>
             </div>
-
             <button
               className="btn btn-primary"
               style={{ marginTop: "1.5rem" }}
@@ -186,9 +184,7 @@ export default function Library() {
             >
               Çalışmaya başla
             </button>
-            <button className="modal-cancel" onClick={() => setShowModal(false)}>
-              İptal
-            </button>
+            <button className="modal-cancel" onClick={() => setShowModal(false)}>İptal</button>
           </div>
         </div>
       )}
