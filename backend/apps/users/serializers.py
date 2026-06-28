@@ -24,4 +24,4 @@ class UserSerializer(serializers.ModelSerializer):
 class UserSettingsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSettings
-        fields = ("set_size",)
+        fields = ("set_size", "level")

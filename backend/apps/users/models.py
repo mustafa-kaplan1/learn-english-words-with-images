@@ -38,15 +38,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
     
 class UserSettings(models.Model):
+    LEVEL_CHOICES = [
+        ("A1", "A1"), ("A2", "A2"),
+        ("B1", "B1"), ("B2", "B2"),
+        ("C1", "C1"), ("C2", "C2"),
+    ]
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="settings",
     )
     set_size = models.IntegerField(default=32)
+    level = models.CharField(max_length=2, choices=LEVEL_CHOICES, default="B1")
 
     class Meta:
         verbose_name = "Kullanıcı Ayarları"
 
     def __str__(self):
-        return f"{self.user.email} — set:{self.set_size}"
+        return f"{self.user.email} — set:{self.set_size} level:{self.level}"

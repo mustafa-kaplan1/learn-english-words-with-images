@@ -11,6 +11,8 @@ GROUP2_LIMIT = 12   # score = 0
 GROUP3_LIMIT = 10   # 0 < score < 10
 SESSION_SIZE = 32
 
+LEVEL_SCORES = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6}
+
 
 def get_session_words(user):
     from apps.users.models import UserSettings
@@ -77,13 +79,22 @@ SCORE_DELTA = {
 
 
 def update_score(user, word_id, action):
-    """
-    action: 'know' | 'unsure' | 'dont_know'
-    UserWord kaydı yoksa oluşturur.
-    Skoru SCORE_MIN ve SCORE_MAX sınırları içinde tutar.
-    Güncellenen UserWord nesnesini döner.
-    """
+    from apps.users.models import UserSettings
+
     delta = SCORE_DELTA.get(action, 0)
+
+    # Sadece "know" aksiyonunda seviye bonusu hesapla
+    if action == "know":
+        try:
+            word = Word.objects.get(pk=word_id)
+            user_settings, _ = UserSettings.objects.get_or_create(user=user)
+            user_level = LEVEL_SCORES.get(user_settings.level, 3)
+            word_level = LEVEL_SCORES.get(word.level, 3)
+            diff = user_level - word_level
+            if diff > 1:
+                delta = diff  # seviye farkı 1'den büyükse bonus puan
+        except Word.DoesNotExist:
+            pass
 
     user_word, _ = UserWord.objects.get_or_create(
         user=user,
