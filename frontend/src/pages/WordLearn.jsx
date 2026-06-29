@@ -113,18 +113,6 @@ export default function WordLearn() {
 								))}
 							</div>
 						</div>
-
-						{/* Yükseklik belirleyici — görünmez arka yüz kopyası */}
-						{flipped && (
-							<div className="wl-card-sizer" aria-hidden="true">
-								<div style={{ height: "2rem" }} />
-								<div className="wl-images">
-									{[0, 1, 2, 3].map((i) => (
-										<div key={i} className="wl-img-wrap" />
-									))}
-								</div>
-							</div>
-						)}
 					</div>
 				</div>
 
