@@ -1,0 +1,120 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+
+  <h1>{{ word.english }}</h1>
+  <p style="color: #666;">{{ word.level }} — {{ word.part_of_speech }}</p>
+
+  {% if reports %}
+  <div style="background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+    <strong>⚠ Açık raporlar ({{ reports|length }})</strong>
+    <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
+      {% for r in reports %}
+      <li>
+        {{ r.user.email }} —
+        {% if r.faulty_images %}Görsel hatası: {{ r.faulty_images }}{% endif %}
+        {% if r.translation_error %} Çeviri hatası{% endif %}
+        — {{ r.created_at|date:"d.m.Y H:i" }}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
+      <legend style="font-weight: bold;">Türkçe çeviriler</legend>
+      {% for tr in translations %}
+      <div style="margin-bottom: 0.6rem;">
+        <label>Anlam {{ forloop.counter }}:</label><br>
+        <input type="text" name="turkish_{{ forloop.counter0 }}" value="{{ tr }}"
+               style="width: 100%; padding: 0.5rem; box-sizing: border-box;">
+      </div>
+      {% endfor %}
+    </fieldset>
+
+    <fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
+      <legend style="font-weight: bold;">Görseller</legend>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        {% for img in images %}
+        <div style="border: 1px solid #eee; border-radius: 8px; padding: 0.8rem;">
+          <p style="font-weight: 600; margin: 0 0 0.5rem;">Görsel {{ forloop.counter }}</p>
+          {% if img %}
+          <img src="{{ img }}" id="preview_{{ forloop.counter0 }}"
+               style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem;">
+          {% else %}
+          <div id="preview_{{ forloop.counter0 }}"
+               style="width: 100%; aspect-ratio: 1; background: #f1f1f1; border-radius: 6px; margin-bottom: 0.5rem;
+                      display: flex; align-items: center; justify-content: center; color: #999;">
+            Görsel yok
+          </div>
+          {% endif %}
+          <input type="text" name="image_{{ forloop.counter0 }}" id="input_{{ forloop.counter0 }}"
+                 value="{{ img }}" placeholder="URL yapıştır veya yaz"
+                 style="width: 100%; padding: 0.4rem; box-sizing: border-box; margin-bottom: 0.4rem; font-size: 0.85rem;"
+                 oninput="updatePreview({{ forloop.counter0 }})">
+          <button type="button" onclick="fetchPexels({{ forloop.counter0 }})"
+                  style="width: 100%; padding: 0.4rem; cursor: pointer;">
+            🔄 Pexels'tan yeni çek
+          </button>
+        </div>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    {% if reports %}
+    <label style="display: block; margin-bottom: 1rem;">
+      <input type="checkbox" name="resolve_reports" value="1" checked>
+      Bu kelimeye ait açık raporları çözüldü olarak işaretle
+    </label>
+    {% endif %}
+
+    <input type="submit" value="Kaydet" class="default"
+           style="padding: 0.7rem 1.5rem; cursor: pointer; font-size: 1rem;">
+    <a href="/admin/words/word/" style="margin-left: 1rem;">İptal</a>
+  </form>
+</div>
+
+<script>
+function updatePreview(slot) {
+  const input = document.getElementById('input_' + slot);
+  const preview = document.getElementById('preview_' + slot);
+  const url = input.value.trim();
+  if (url) {
+    if (preview.tagName === 'IMG') {
+      preview.src = url;
+    } else {
+      const img = document.createElement('img');
+      img.id = 'preview_' + slot;
+      img.src = url;
+      img.style.cssText = preview.style.cssText.replace('display: flex; align-items: center; justify-content: center; color: #999;', '');
+      preview.replaceWith(img);
+    }
+  }
+}
+
+async function fetchPexels(slot) {
+  const btn = event.target;
+  btn.disabled = true;
+  btn.textContent = 'Çekiliyor...';
+  try {
+    const res = await fetch(`/admin/words/word/{{ word.id }}/fetch-pexels/${slot}/`);
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('input_' + slot).value = data.url;
+      updatePreview(slot);
+    } else {
+      alert(data.error || 'Görsel alınamadı.');
+    }
+  } catch (e) {
+    alert('Bir hata oluştu.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🔄 Pexels'tan yeni çek";
+  }
+}
+</script>
+{% endblock %}
