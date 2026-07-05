@@ -1,21 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import api from "../api/axios";
-import { getUserSettings, updateUserSettings } from "../api/endpoints";
+import { getUserSettings, updateUserSettings, updateProfile } from "../api/endpoints";
 
 const SET_SIZES = [8, 16, 24, 32];
 const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export default function Settings() {
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser, loginUser } = useAuth();
 
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [pwLoading, setPwLoading] = useState(false);
-  const [pwSuccess, setPwSuccess] = useState("");
-  const [pwError, setPwError] = useState("");
+  const [firstName, setFirstName] = useState(user?.first_name || "");
+  const [lastName, setLastName] = useState(user?.last_name || "");
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileSuccess, setProfileSuccess] = useState("");
+  const [profileError, setProfileError] = useState("");
 
   const [setSize, setSetSize] = useState(32);
   const [userLevel, setUserLevel] = useState("B1");
@@ -31,6 +29,28 @@ export default function Settings() {
       .finally(() => setSettingsLoading(false));
   }, []);
 
+  const handleProfileSave = async () => {
+    setProfileError("");
+    setProfileSuccess("");
+    if (!firstName || !lastName) { setProfileError("Ad ve soyad zorunludur."); return; }
+    setProfileLoading(true);
+    try {
+      const { data } = await updateProfile({ first_name: firstName, last_name: lastName });
+      // AuthContext'teki user'ı güncelle
+      loginUser(
+        localStorage.getItem("access"),
+        localStorage.getItem("refresh"),
+        data,
+      );
+      setProfileSuccess("Profil güncellendi.");
+      setTimeout(() => setProfileSuccess(""), 2000);
+    } catch {
+      setProfileError("Bir hata oluştu.");
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
   const handleSetSize = async (size) => {
     setSetSize(size);
     setSettingsSuccess("");
@@ -38,9 +58,7 @@ export default function Settings() {
       await updateUserSettings({ set_size: size });
       setSettingsSuccess("Kaydedildi.");
       setTimeout(() => setSettingsSuccess(""), 2000);
-    } catch {
-      // sessizce geç
-    }
+    } catch {}
   };
 
   const handleLevel = async (level) => {
@@ -50,44 +68,55 @@ export default function Settings() {
       await updateUserSettings({ level });
       setSettingsSuccess("Kaydedildi.");
       setTimeout(() => setSettingsSuccess(""), 2000);
-    } catch {
-      // sessizce geç
-    }
-  };
-
-  const handlePasswordChange = async () => {
-    setPwError("");
-    setPwSuccess("");
-    if (newPassword.length < 8) { setPwError("Yeni şifre en az 8 karakter olmalı."); return; }
-    if (newPassword !== confirmPassword) { setPwError("Yeni şifreler eşleşmiyor."); return; }
-    setPwLoading(true);
-    try {
-      await api.post("/auth/change-password/", {
-        current_password: currentPassword,
-        new_password: newPassword,
-      });
-      setPwSuccess("Şifre başarıyla güncellendi.");
-      setCurrentPassword(""); setNewPassword(""); setConfirmPassword("");
-    } catch (err) {
-      const msg = err.response?.data;
-      setPwError(typeof msg === "object" ? Object.values(msg).flat().join(" ") : "Bir hata oluştu.");
-    } finally {
-      setPwLoading(false);
-    }
+    } catch {}
   };
 
   return (
     <div className="settings-page">
-      <Link to="/" className="wl-back">← Ana sayfa</Link>
+      <Link to="/home" className="wl-back">← Ana sayfa</Link>
       <h1 style={{ marginTop: "1rem", marginBottom: "2rem" }}>Ayarlar</h1>
 
       {/* Profil */}
       <div className="settings-card">
-        <h2 className="settings-section-title">Profil</h2>
+        <h2 className="settings-section-title">Profil bilgileri</h2>
+
         <div className="settings-row">
           <span className="settings-label">E-posta</span>
           <span className="settings-value">{user?.email}</span>
         </div>
+
+        <div className="form-row" style={{ marginTop: "1rem" }}>
+          <div className="form-group">
+            <label>Ad</label>
+            <input
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Adınız"
+            />
+          </div>
+          <div className="form-group">
+            <label>Soyad</label>
+            <input
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Soyadınız"
+            />
+          </div>
+        </div>
+
+        {profileError && <div className="error-msg">{profileError}</div>}
+        {profileSuccess && <div className="success-msg">{profileSuccess}</div>}
+
+        <button
+          className="btn btn-primary"
+          onClick={handleProfileSave}
+          disabled={profileLoading}
+          style={{ marginTop: "0.5rem" }}
+        >
+          {profileLoading ? "Kaydediliyor..." : "Kaydet"}
+        </button>
       </div>
 
       {/* Set büyüklüğü */}
@@ -118,7 +147,7 @@ export default function Settings() {
         )}
       </div>
 
-      {/* Seviye seçimi */}
+      {/* Seviye */}
       <div className="settings-card">
         <h2 className="settings-section-title">İngilizce seviyem</h2>
         <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginBottom: "1rem" }}>
@@ -139,32 +168,6 @@ export default function Settings() {
             ))}
           </div>
         )}
-      </div>
-
-      {/* Şifre */}
-      <div className="settings-card">
-        <h2 className="settings-section-title">Şifre değiştir</h2>
-        {pwError && <div className="error-msg">{pwError}</div>}
-        {pwSuccess && (
-          <div className="error-msg" style={{ background: "#052e16", borderColor: "var(--success)", color: "#86efac" }}>
-            {pwSuccess}
-          </div>
-        )}
-        <div className="form-group">
-          <label>Mevcut şifre</label>
-          <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Yeni şifre</label>
-          <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Yeni şifre tekrar</label>
-          <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-        </div>
-        <button className="btn btn-primary" onClick={handlePasswordChange} disabled={pwLoading}>
-          {pwLoading ? "Güncelleniyor..." : "Şifreyi güncelle"}
-        </button>
       </div>
 
       {/* Hesap */}
