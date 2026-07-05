@@ -1,120 +1,179 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-<div style="max-width: 800px; margin: 0 auto;">
+<div style="max-width: 860px; margin: 0 auto;">
 
-  <h1>{{ word.english }}</h1>
-  <p style="color: #666;">{{ word.level }} — {{ word.part_of_speech }}</p>
+	<h1 style="margin-bottom: 0.3rem;">{{ word.english }}</h1>
+	<p style="color: #666; margin-bottom: 1.5rem;">{{ word.level }} — {{ word.part_of_speech }}</p>
 
-  {% if reports %}
-  <div style="background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-    <strong>⚠ Açık raporlar ({{ reports|length }})</strong>
-    <ul style="margin: 0.5rem 0 0; padding-left: 1.2rem;">
-      {% for r in reports %}
-      <li>
-        {{ r.user.email }} —
-        {% if r.faulty_images %}Görsel hatası: {{ r.faulty_images }}{% endif %}
-        {% if r.translation_error %} Çeviri hatası{% endif %}
-        — {{ r.created_at|date:"d.m.Y H:i" }}
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
+	{% if total_reports > 0 %}
+	<div
+		style="background: #fef2f2; border: 1px solid #fca5a5; border-radius: 8px; padding: 1.2rem; margin-bottom: 1.5rem;">
+		<strong style="color: #dc2626;">⚠ {{ total_reports }} açık rapor</strong>
+		<div
+			style="margin-top: 0.8rem; display: grid; grid-template-columns: repeat(4,1fr) auto; gap: 0.5rem; align-items: center;">
+			{% for count in image_counts %}
+			<div
+				style="text-align: center; padding: 0.6rem; background: {% if count > 0 %}#fee2e2{% else %}#f1f1f1{% endif %}; border-radius: 6px;">
+				<div
+					style="font-size: 1.2rem; font-weight: bold; color: {% if count > 0 %}#dc2626{% else %}#999{% endif %};">
+					{{ count }}</div>
+				<div style="font-size: 0.75rem; color: #666;">{{ forloop.counter }}. görsel</div>
+			</div>
+			{% endfor %}
+			<div
+				style="text-align: center; padding: 0.6rem; background: {% if translation_count > 0 %}#fee2e2{% else %}#f1f1f1{% endif %}; border-radius: 6px;">
+				<div
+					style="font-size: 1.2rem; font-weight: bold; color: {% if translation_count > 0 %}#dc2626{% else %}#999{% endif %};">
+					{{ translation_count }}</div>
+				<div style="font-size: 0.75rem; color: #666;">Çeviri</div>
+			</div>
+		</div>
+		<p style="margin-top: 0.8rem; font-size: 0.85rem; color: #666;">
+			Kaydet butonuna bastığında tüm raporlar otomatik silinir.
+		</p>
+	</div>
+	{% endif %}
 
-  <form method="post">
-    {% csrf_token %}
+	<form method="post">
+		{% csrf_token %}
 
-    <fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
-      <legend style="font-weight: bold;">Türkçe çeviriler</legend>
-      {% for tr in translations %}
-      <div style="margin-bottom: 0.6rem;">
-        <label>Anlam {{ forloop.counter }}:</label><br>
-        <input type="text" name="turkish_{{ forloop.counter0 }}" value="{{ tr }}"
-               style="width: 100%; padding: 0.5rem; box-sizing: border-box;">
-      </div>
-      {% endfor %}
-    </fieldset>
+		<!-- Türkçe çeviriler -->
+		<fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1.2rem;">
+			<legend style="font-weight: bold; padding: 0 0.5rem;">
+				Türkçe çeviriler
+				{% if translation_count > 0 %}
+				<span style="color: #dc2626; font-size: 0.85rem;">⚠ {{ translation_count }} rapor</span>
+				{% endif %}
+			</legend>
+			{% for tr in translations %}
+			<div style="margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+				<label style="width: 60px; font-size: 0.85rem; color: #666;">Anlam {{ forloop.counter }}</label>
+				<input type="text" name="turkish_{{ forloop.counter0 }}" value="{{ tr }}"
+					style="flex: 1; padding: 0.5rem; border: 1px solid #ddd; border-radius: 6px;">
+			</div>
+			{% endfor %}
+		</fieldset>
 
-    <fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1rem;">
-      <legend style="font-weight: bold;">Görseller</legend>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-        {% for img in images %}
-        <div style="border: 1px solid #eee; border-radius: 8px; padding: 0.8rem;">
-          <p style="font-weight: 600; margin: 0 0 0.5rem;">Görsel {{ forloop.counter }}</p>
-          {% if img %}
-          <img src="{{ img }}" id="preview_{{ forloop.counter0 }}"
-               style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem;">
-          {% else %}
-          <div id="preview_{{ forloop.counter0 }}"
-               style="width: 100%; aspect-ratio: 1; background: #f1f1f1; border-radius: 6px; margin-bottom: 0.5rem;
-                      display: flex; align-items: center; justify-content: center; color: #999;">
-            Görsel yok
-          </div>
-          {% endif %}
-          <input type="text" name="image_{{ forloop.counter0 }}" id="input_{{ forloop.counter0 }}"
-                 value="{{ img }}" placeholder="URL yapıştır veya yaz"
-                 style="width: 100%; padding: 0.4rem; box-sizing: border-box; margin-bottom: 0.4rem; font-size: 0.85rem;"
-                 oninput="updatePreview({{ forloop.counter0 }})">
-          <button type="button" onclick="fetchPexels({{ forloop.counter0 }})"
-                  style="width: 100%; padding: 0.4rem; cursor: pointer;">
-            🔄 Pexels'tan yeni çek
-          </button>
-        </div>
-        {% endfor %}
-      </div>
-    </fieldset>
+		<!-- Görseller -->
+		<fieldset style="margin-bottom: 1.5rem; border: 1px solid #ddd; border-radius: 8px; padding: 1.2rem;">
+			<legend style="font-weight: bold; padding: 0 0.5rem;">Görseller</legend>
+			<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+				{% for img in images %}
+				<div
+					style="border: 1px solid {% if image_counts|slice:forloop.counter0|first > 0 %}#fca5a5{% else %}#eee{% endif %}; border-radius: 8px; padding: 0.8rem;">
+					<div
+						style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+						<p style="font-weight: 600; margin: 0;">
+							Görsel {{ forloop.counter }}
+						</p>
+						{% with count=image_counts|slice:forloop.counter0 %}
+						{% for c in count %}
+						{% if c > 0 %}
+						<span style="color: #dc2626; font-size: 0.8rem;">⚠ {{ c }} rapor</span>
+						{% endif %}
+						{% endfor %}
+						{% endwith %}
+					</div>
 
-    {% if reports %}
-    <label style="display: block; margin-bottom: 1rem;">
-      <input type="checkbox" name="resolve_reports" value="1" checked>
-      Bu kelimeye ait açık raporları çözüldü olarak işaretle
-    </label>
-    {% endif %}
+					{% if img %}
+					<img src="{{ img }}" id="preview_{{ forloop.counter0 }}"
+						style="width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem;">
+					{% else %}
+					<div id="preview_{{ forloop.counter0 }}" style="width: 100%; aspect-ratio: 1; background: #f5f5f5; border-radius: 6px;
+                      margin-bottom: 0.5rem; display: flex; align-items: center;
+                      justify-content: center; color: #999; font-size: 0.85rem;">
+						Görsel yok
+					</div>
+					{% endif %}
 
-    <input type="submit" value="Kaydet" class="default"
-           style="padding: 0.7rem 1.5rem; cursor: pointer; font-size: 1rem;">
-    <a href="/admin/words/word/" style="margin-left: 1rem;">İptal</a>
-  </form>
+					<input type="text" name="image_{{ forloop.counter0 }}" id="input_{{ forloop.counter0 }}"
+						value="{{ img }}" placeholder="URL yapıştır veya yaz" style="width: 100%; padding: 0.4rem; border: 1px solid #ddd; border-radius: 6px;
+                        margin-bottom: 0.4rem; font-size: 0.82rem; box-sizing: border-box;"
+						oninput="updatePreview({{ forloop.counter0 }})">
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+						<button type="button" onclick="fetchPexels({{ forloop.counter0 }})"
+							id="pexels_btn_{{ forloop.counter0 }}" style="padding: 0.4rem; cursor: pointer; font-size: 0.8rem; border-radius: 6px;
+                           border: 1px solid #ddd; background: #f9f9f9;">
+							🔄 Pexels
+						</button>
+						<button type="button" disabled style="padding: 0.4rem; font-size: 0.8rem; border-radius: 6px;
+               border: 1px solid #ddd; background: #f5f5f5; color: #999;
+               cursor: not-allowed; opacity: 0.6;">
+							✨ Gemini (yakında)
+						</button>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</fieldset>
+
+		<div style="display: flex; align-items: center; gap: 1rem;">
+			<input type="submit" value="Kaydet ve raporları sil" class="default"
+				style="padding: 0.7rem 1.5rem; cursor: pointer; font-size: 1rem;">
+			<a href="/admin/words/word/" style="color: #666;">İptal</a>
+		</div>
+	</form>
 </div>
 
 <script>
-function updatePreview(slot) {
-  const input = document.getElementById('input_' + slot);
-  const preview = document.getElementById('preview_' + slot);
-  const url = input.value.trim();
-  if (url) {
-    if (preview.tagName === 'IMG') {
-      preview.src = url;
-    } else {
-      const img = document.createElement('img');
-      img.id = 'preview_' + slot;
-      img.src = url;
-      img.style.cssText = preview.style.cssText.replace('display: flex; align-items: center; justify-content: center; color: #999;', '');
-      preview.replaceWith(img);
-    }
-  }
-}
+	function updatePreview(slot) {
+		const input = document.getElementById('input_' + slot);
+		const preview = document.getElementById('preview_' + slot);
+		const url = input.value.trim();
+		if (!url) return;
+		if (preview.tagName === 'IMG') {
+			preview.src = url;
+		} else {
+			const img = document.createElement('img');
+			img.id = 'preview_' + slot;
+			img.src = url;
+			img.style.cssText = 'width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:0.5rem;';
+			preview.replaceWith(img);
+		}
+	}
 
-async function fetchPexels(slot) {
-  const btn = event.target;
-  btn.disabled = true;
-  btn.textContent = 'Çekiliyor...';
-  try {
-    const res = await fetch(`/admin/words/word/{{ word.id }}/fetch-pexels/${slot}/`);
-    const data = await res.json();
-    if (data.success) {
-      document.getElementById('input_' + slot).value = data.url;
-      updatePreview(slot);
-    } else {
-      alert(data.error || 'Görsel alınamadı.');
-    }
-  } catch (e) {
-    alert('Bir hata oluştu.');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "🔄 Pexels'tan yeni çek";
-  }
-}
+	async function fetchPexels(slot) {
+		const btn = document.getElementById('pexels_btn_' + slot);
+		btn.disabled = true;
+		btn.textContent = 'Çekiliyor...';
+		try {
+			const res = await fetch(`/admin/words/word/{{ word.id }}/fetch-pexels/${slot}/`);
+			const data = await res.json();
+			if (data.success) {
+				document.getElementById('input_' + slot).value = data.url;
+				updatePreview(slot);
+			} else {
+				alert(data.error || 'Görsel alınamadı.');
+			}
+		} catch {
+			alert('Bir hata oluştu.');
+		} finally {
+			btn.disabled = false;
+			btn.textContent = '🔄 Pexels';
+		}
+	}
+
+	async function generateGemini(slot) {
+		const btn = document.getElementById('gemini_btn_' + slot);
+		btn.disabled = true;
+		btn.textContent = '⏳ Üretiliyor...';
+		try {
+			const res = await fetch(`/admin/words/word/{{ word.id }}/generate-gemini/${slot}/`);
+			const data = await res.json();
+			if (data.success) {
+				document.getElementById('input_' + slot).value = data.url;
+				updatePreview(slot);
+			} else {
+				alert(data.error || 'Görsel üretilemedi.');
+			}
+		} catch {
+			alert('Bir hata oluştu.');
+		} finally {
+			btn.disabled = false;
+			btn.textContent = '✨ Gemini';
+		}
+	}
 </script>
 {% endblock %}
