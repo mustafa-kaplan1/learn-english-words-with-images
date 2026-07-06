@@ -80,7 +80,7 @@ class WordReportView(APIView):
         translation_error = request.data.get("translation_error", False)
 
         if not word_id:
-            return Response({"detail": "word_id zorunlu."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "word_id zorunludur."}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             word = Word.objects.get(pk=word_id)
