@@ -151,22 +151,23 @@ class WordAdmin(admin.ModelAdmin):
         return JsonResponse({"success": False, "error": "Pexels'tan görsel alınamadı."})
 
     def generate_gemini_slot(self, request, word_id, slot):
-        from .gemini_service import generate_image_for_word
+        import uuid
+        from . import ai_service
         word = get_object_or_404(Word, pk=word_id)
-
-        b64 = generate_image_for_word(word.english, word.part_of_speech)
-        if not b64:
-            return JsonResponse({"success": False, "error": "Gemini görsel üretemedi."})
-
-        url = save_gemini_image(word.english, slot, b64)
-        cache, _ = WordImageCache.objects.get_or_create(word=word, defaults={"image_urls": []})
-        images = list(cache.image_urls) + [""] * 4
-        images = images[:4]
-        images[slot] = url
-        cache.image_urls = images
-        cache.save()
-
-        return JsonResponse({"success": True, "url": url})
+        turkish = word.turkish[0] if isinstance(word.turkish, list) and word.turkish else ""
+        try:
+            img_bytes = ai_service.generate_word_image(word.english, turkish)
+            file_key = f"words/{word.english.lower()}_{slot}_{uuid.uuid4().hex[:6]}.webp"
+            url = ai_service.upload_image_to_r2(img_bytes, file_key)
+            cache, _ = WordImageCache.objects.get_or_create(word=word, defaults={"image_urls": []})
+            images = list(cache.image_urls) + [""] * 4
+            images = images[:4]
+            images[slot] = url
+            cache.image_urls = images
+            cache.save()
+            return JsonResponse({"success": True, "url": url})
+        except Exception as e:
+            return JsonResponse({"success": False, "error": str(e)})
 
 
 @admin.register(UserWord)
@@ -184,9 +185,28 @@ class WordImageCacheAdmin(admin.ModelAdmin):
 
 @admin.register(WordReport)
 class WordReportAdmin(admin.ModelAdmin):
-    list_display = ("word_link", "report_summary", "user_count", "created_at")
-    search_fields = ("word__english",)
-    ordering = ("-created_at",)
+    list_display = ("word_link", "report_summary", "user_count", "resolved", "created_at")
+    list_filter = ("resolved", "translation_error")
+    search_fields = ("word__english", "user__email")
+    ordering = ("resolved", "-created_at")
+    actions = ["resolve_with_gemini"]
+
+    @admin.action(description="Seçili raporları Gemini Imagen 3 & Cloudflare R2 ile çöz")
+    def resolve_with_gemini(self, request, queryset):
+        from . import ai_service
+        success_count = 0
+        error_count = 0
+
+        for report in queryset:
+            try:
+                ai_service.resolve_word_report(report)
+                success_count += 1
+            except Exception as e:
+                error_count += 1
+                messages.error(request, f"Rapor #{report.id} ({report.word.english}) çözülürken hata: {e}")
+
+        if success_count > 0:
+            messages.success(request, f"{success_count} adet rapor Gemini & Cloudflare R2 ile başarıyla çözüldü.")
 
     def changelist_view(self, request, extra_context=None):
         # Kelimeleri rapor sayısına göre sırala
