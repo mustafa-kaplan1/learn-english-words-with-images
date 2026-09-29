@@ -49,7 +49,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "json_path",
             nargs="?",
-            default=str(Path(__file__).resolve().parents[5] / "data" / "words.json"),
+            default=str(Path(__file__).resolve().parents[4] / "data" / "words.json"),
             help="JSON dosyasının yolu (varsayılan: backend/data/words.json)",
         )
         parser.add_argument(

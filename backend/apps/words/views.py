@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Word, WordReport
+from .models import Word, WordReport, UserWord
 from .serializers import SessionWordSerializer, ScoreUpdateSerializer, UserWordSerializer
 from . import services
 
@@ -15,8 +15,13 @@ class WordSessionView(APIView):
 
     def get(self, request):
         words = services.get_session_words(request.user)
+        word_ids = [w.id for w in words]
+        user_scores = dict(
+            UserWord.objects.filter(user=request.user, word_id__in=word_ids)
+            .values_list("word_id", "score")
+        )
         serializer = SessionWordSerializer(
-            words, many=True, context={"user": request.user}
+            words, many=True, context={"user": request.user, "user_scores": user_scores}
         )
         return Response(serializer.data)
 

@@ -136,6 +136,10 @@ class ProfileView(APIView):
         user = request.user
         user.first_name = request.data.get("first_name", user.first_name)
         user.last_name = request.data.get("last_name", user.last_name)
+        if "level" in request.data:
+            new_level = request.data.get("level")
+            user.level = new_level
+            UserSettings.objects.filter(user=user).update(level=new_level)
         user.save()
         return Response(UserSerializer(user).data)
 
@@ -215,5 +219,10 @@ class UserSettingsView(APIView):
         serializer = UserSettingsSerializer(obj, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            if "level" in serializer.validated_data:
+                new_level = serializer.validated_data["level"]
+                if request.user.level != new_level:
+                    request.user.level = new_level
+                    request.user.save(update_fields=["level"])
             return Response(serializer.data)
         return Response(serializer.errors, status=400)

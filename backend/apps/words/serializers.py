@@ -28,11 +28,14 @@ class SessionWordSerializer(serializers.ModelSerializer):
         fields = ("id", "english", "turkish", "level", "part_of_speech", "score")
 
     def get_score(self, obj):
+        user_scores = self.context.get("user_scores")
+        if user_scores is not None:
+            return user_scores.get(obj.id, 0)
         user = self.context.get("user")
         if not user:
             return 0
         try:
-            return obj.user_words.get(user=user).score
+            return obj.user_words.filter(user=user).values_list("score", flat=True).first() or 0
         except Exception:
             return 0
 

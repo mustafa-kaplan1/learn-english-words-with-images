@@ -103,14 +103,16 @@ export default function WordLearn() {
 									}
 								</div>
 							</div>
-							<div className="wl-images">
-								{loadingImages && <div className="wl-img-loading">Görseller yükleniyor...</div>}
-								{!loadingImages && images.length === 0 && <div className="wl-img-loading">Görsel bulunamadı.</div>}
-								{images.map((url, i) => (
-									<div key={i} className="wl-img-wrap">
-										<img src={url} alt={word.english} className="wl-img" />
-									</div>
-								))}
+							<div className="wl-images-container">
+								<div className="wl-images">
+									{loadingImages && <div className="wl-img-loading">Görseller yükleniyor...</div>}
+									{!loadingImages && images.length === 0 && <div className="wl-img-loading">Görsel bulunamadı.</div>}
+									{images.map((url, i) => (
+										<div key={i} className="wl-img-wrap">
+											<img src={url} alt={word.english} className="wl-img" />
+										</div>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
