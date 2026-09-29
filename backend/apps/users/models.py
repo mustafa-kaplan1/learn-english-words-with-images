@@ -57,6 +57,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 class EmailVerification(models.Model):
     email = models.EmailField()
     token = models.CharField(max_length=64, unique=True)
+    code = models.CharField(max_length=6, blank=True, default="")
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     verified = models.BooleanField(default=False)
@@ -67,6 +68,8 @@ class EmailVerification(models.Model):
     def save(self, *args, **kwargs):
         if not self.token:
             self.token = secrets.token_urlsafe(32)
+        if not self.code:
+            self.code = f"{secrets.randbelow(900000) + 100000}"
         if not self.expires_at:
             self.expires_at = timezone.now() + timedelta(minutes=30)
         super().save(*args, **kwargs)

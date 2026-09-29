@@ -4,8 +4,10 @@ import api from "./axios";
 export const registerStep1 = (email) =>
   api.post("/auth/register/step1/", { email });
 
-export const registerStep2 = (token) =>
-  api.post("/auth/register/step2/", { token });
+export const registerStep2 = (payload) =>
+  typeof payload === "string"
+    ? api.post("/auth/register/step2/", { token: payload })
+    : api.post("/auth/register/step2/", payload);
 
 export const registerStep3 = (token, password, first_name, last_name, level) =>
   api.post("/auth/register/step3/", { token, password, first_name, last_name, level });

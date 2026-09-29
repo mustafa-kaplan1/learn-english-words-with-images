@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.utils import timezone
+from django.conf import settings
 
 from .models import User, UserSettings, EmailVerification, PasswordResetToken
 from .serializers import UserSerializer, UserSettingsSerializer
@@ -24,39 +25,74 @@ class RegisterStep1View(APIView):
 
         # Eski doğrulanmamış kayıtları temizle
         User.objects.filter(email=email, is_verified=False).delete()
+        EmailVerification.objects.filter(email=email).delete()
 
         # Yeni doğrulama token'ı oluştur
         verification = EmailVerification.objects.create(email=email)
 
-        try:
-            send_verification_email(email, verification.token)
-        except Exception:
-            return Response({"detail": "E-posta gönderilemedi."}, status=500)
+        print("\n" + "=" * 50)
+        print(f"[DOGRULAMA TALEBI] E-posta: {email}")
+        print(f"[DOGRULAMA KODU] 6 Haneli Kod: {verification.code}")
+        print(f"[DOGRULAMA LINKI] Link: {settings.FRONTEND_URL}/register?step=2&token={verification.token}")
+        print("=" * 50 + "\n")
 
-        return Response({"detail": "Doğrulama e-postası gönderildi."})
+        email_sent = False
+        email_error = ""
+        try:
+            send_verification_email(email, verification.token, verification.code)
+            email_sent = True
+        except Exception as e:
+            email_error = str(e)
+            print(f"[RESEND UYARISI] {email_error}")
+
+        if not email_sent:
+            if settings.DEBUG:
+                return Response({
+                    "detail": "Doğrulama kodu oluşturuldu (Terminali kontrol edebilirsiniz).",
+                    "dev_code": verification.code,
+                })
+            return Response({"detail": f"E-posta gönderilemedi: {email_error}"}, status=400)
+
+        return Response({"detail": "Doğrulama e-postası ve 6 haneli kod gönderildi."})
 
 
 class RegisterStep2View(APIView):
-    """Token'ı doğrula."""
+    """Token'ı veya 6 haneli kodu doğrula."""
     permission_classes = [AllowAny]
 
     def post(self, request):
         token = request.data.get("token", "").strip()
-        if not token:
-            return Response({"detail": "Token zorunludur."}, status=400)
+        code = request.data.get("code", "").strip()
+        email = request.data.get("email", "").strip().lower()
 
-        try:
-            verification = EmailVerification.objects.get(token=token)
-        except EmailVerification.DoesNotExist:
-            return Response({"detail": "Geçersiz token."}, status=400)
+        if not token and not code:
+            return Response({"detail": "Doğrulama kodu veya bağlantı zorunludur."}, status=400)
+
+        verification = None
+        if token:
+            try:
+                verification = EmailVerification.objects.get(token=token)
+            except EmailVerification.DoesNotExist:
+                return Response({"detail": "Geçersiz veya süresi dolmuş bağlantı."}, status=400)
+        elif code:
+            query = EmailVerification.objects.filter(code=code)
+            if email:
+                query = query.filter(email=email)
+            verification = query.order_by("-created_at").first()
+            if not verification:
+                return Response({"detail": "Geçersiz doğrulama kodu."}, status=400)
 
         if not verification.is_valid():
-            return Response({"detail": "Token süresi dolmuş."}, status=400)
+            return Response({"detail": "Doğrulama süresi dolmuş. Lütfen tekrar kod isteyin."}, status=400)
 
         verification.verified = True
         verification.save()
 
-        return Response({"detail": "E-posta doğrulandı.", "email": verification.email})
+        return Response({
+            "detail": "E-posta doğrulandı.",
+            "email": verification.email,
+            "token": verification.token,
+        })
 
 
 class RegisterStep3View(APIView):
