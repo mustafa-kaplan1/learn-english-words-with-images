@@ -1,4 +1,4 @@
-import api from "./axios";
+﻿import api from "./axios";
 
 // Auth
 export const registerStep1 = (email) =>
@@ -37,3 +37,12 @@ export const getWordImages = (word_id) =>
 export const getLibrary = () => api.get("/words/library/");
 export const reportWord = (word_id, faulty_images, translation_error) =>
   api.post("/words/report/", { word_id, faulty_images, translation_error });
+
+// Grammar
+export const getGrammarTopics = (level) =>
+  api.get("/grammar/topics/", { params: level ? { level } : {} });
+export const startGrammarSession = (topic_id, question_count = 5) =>
+  api.post("/grammar/session/start/", { topic_id, question_count });
+export const submitGrammarTranslation = (question_id, user_translation) =>
+  api.post("/grammar/session/submit/", { question_id, user_translation });
+export const getGrammarLibrary = () => api.get("/grammar/library/");

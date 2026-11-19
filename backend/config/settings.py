@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # Local apps
     "apps.users",
     "apps.words",
+    "apps.grammar",
 ]
 
 MIDDLEWARE = [

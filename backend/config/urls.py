@@ -7,4 +7,5 @@ urlpatterns = [
     path("api/auth/", include("apps.users.urls")),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("api/words/", include("apps.words.urls")),
+    path("api/grammar/", include("apps.grammar.urls")),
 ]
