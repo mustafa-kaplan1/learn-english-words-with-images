@@ -105,3 +105,39 @@ class UserQuestionProgress(models.Model):
 
     def __str__(self):
         return f"{self.user} - Q{self.question_id}: {self.correct_count} doğru"
+
+
+class GrammarQuestionReport(models.Model):
+    REPORT_REASONS = [
+        ("wrong_translation", "Hatalı Çeviri"),
+        ("typo", "Yazım / İmla Hatası"),
+        ("missing_alternative", "Eksik Doğru Alternatif"),
+        ("other", "Diğer"),
+    ]
+
+    question = models.ForeignKey(
+        GrammarQuestion,
+        on_delete=models.CASCADE,
+        related_name="reports",
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="grammar_reports",
+    )
+    reason = models.CharField(
+        max_length=50,
+        choices=REPORT_REASONS,
+        default="wrong_translation",
+    )
+    comment = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Gramer Soru Raporu"
+        verbose_name_plural = "Gramer Soru Raporları"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Q{self.question_id} — {self.get_reason_display()} ({self.user.email})"

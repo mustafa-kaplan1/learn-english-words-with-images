@@ -1,4 +1,4 @@
-﻿import api from "./axios";
+import api from "./axios";
 
 // Auth
 export const registerStep1 = (email) =>
@@ -46,3 +46,8 @@ export const startGrammarSession = (topic_id, question_count = 5) =>
 export const submitGrammarTranslation = (question_id, user_translation) =>
   api.post("/grammar/session/submit/", { question_id, user_translation });
 export const getGrammarLibrary = () => api.get("/grammar/library/");
+
+export const selfEvaluateGrammarTranslation = (question_id, action, user_translation) =>
+  api.post("/grammar/session/self-evaluate/", { question_id, action, user_translation });
+export const reportGrammarQuestion = (question_id, reason, comment) =>
+  api.post("/grammar/report/", { question_id, reason, comment });

@@ -1,4 +1,4 @@
-﻿/* ── Grammar Genel Sayfa Stilleri ── */
+/* ── Grammar Genel Sayfa Stilleri ── */
 .gm-page {
   max-width: 900px;
   margin: 0 auto;
@@ -440,4 +440,179 @@
 
 .gm-next-btn:hover {
   filter: brightness(1.1);
+}
+
+/* ── Kendi Kendini Değerlendir (Self-Evaluation) Alanı ── */
+.gm-self-eval-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.gm-self-eval-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gm-answers-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gm-answer-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--bg-card);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.gm-answer-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.gm-answer-val {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.gm-val-user {
+  color: #93c5fd;
+}
+
+.gm-val-ref {
+  color: #86efac;
+}
+
+.gm-alt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+
+.gm-alt-chip {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.gm-self-eval-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .gm-self-eval-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gm-eval-btn {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: all 0.15s ease;
+}
+
+.gm-btn-know {
+  background: #15803d;
+  color: #fff;
+}
+.gm-btn-know:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+.gm-btn-dont {
+  background: #b91c1c;
+  color: #fff;
+}
+.gm-btn-dont:hover:not(:disabled) {
+  background: #dc2626;
+}
+
+.gm-btn-ai {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  color: #fff;
+}
+.gm-btn-ai:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.gm-eval-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Hata Bildir Butonu ve Modalı ── */
+.gm-report-trigger {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.gm-report-trigger:hover {
+  background: var(--bg-hover);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.gm-report-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gm-report-select, .gm-report-textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.gm-report-select:focus, .gm-report-textarea:focus {
+  border-color: var(--accent);
+  outline: none;
 }

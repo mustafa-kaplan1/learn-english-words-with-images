@@ -74,4 +74,5 @@ logs/
 backend/image_cache/
 *.tmp
 
-plans.txt
+*plan*.txt
+test*.py

@@ -1,0 +1,207 @@
+{
+  "B2.01": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Daha çok çalışsaydım sınavı geçerdim.", "reference_translation": "If I had studied harder, I would have passed the exam.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana söyleseydin sana yardım ederdim.", "reference_translation": "If you had told me, I would have helped you.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "If she had left earlier, she wouldn't have missed the flight.", "reference_translation": "Daha erken çıksaydı uçağı kaçırmazdı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hava yağmurlu olmasaydı pikniğe giderdik.", "reference_translation": "If it hadn't rained, we would have gone on a picnic.", "alternatives": ["If it had not rained, we would have gone on a picnic."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What would you have done if you had won the lottery?", "reference_translation": "Piyangoyu kazansaydın ne yapardın?", "alternatives": []}
+  ],
+  "B2.02": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tavsiyeni dinleseydim şimdi bu dertte olmazdım.", "reference_translation": "If I had followed your advice, I wouldn't be in trouble now.", "alternatives": ["If I had taken your advice, I wouldn't be in this trouble now."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Uçmaktan korkmasaydı geçen hafta bizimle gelirdi.", "reference_translation": "If he weren't afraid of flying, he would have joined us last week.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "If I were rich, I would have bought that mansion.", "reference_translation": "Zengin olsaydım o malikaneyi satın alırdım.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün uyusaydın şimdi yorgun olmazdın.", "reference_translation": "If you had slept yesterday, you wouldn't be tired now.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "If she spoke French, she could have applied for that job.", "reference_translation": "Fransızca konuşabilseydi o işe başvurabilirdi.", "alternatives": []}
+  ],
+  "B2.03": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Keşke o partiye gitmeseydim.", "reference_translation": "I wish I hadn't gone to that party.", "alternatives": ["I wish I had not gone to that party."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Keşke gerçeği ona söyleseydim.", "reference_translation": "If only I had told him the truth.", "alternatives": ["I wish I had told him the truth."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She wishes she had accepted the job offer.", "reference_translation": "İş teklifini kabul etmiş olmayı dilerdi.", "alternatives": ["Keşke iş teklifini kabul etseydi."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Keşke dün araba sürmeseydim.", "reference_translation": "I wish I hadn't driven yesterday.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "If only we had booked the tickets in advance.", "reference_translation": "Keşke biletleri önceden ayırtmış olsaydık.", "alternatives": []}
+  ],
+  "B2.04": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Evde kalmayı dışarı çıkmaya tercih ederim.", "reference_translation": "I would rather stay at home than go out.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Şimdi gitmeni tercih ederim.", "reference_translation": "I would rather you left now.", "alternatives": ["I'd rather you left now."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Would you rather have tea or coffee?", "reference_translation": "Çay mı yoksa kahve mi tercih edersin?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ona gerçeği söylememeni tercih ederdim.", "reference_translation": "I would rather you hadn't told him the truth.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She would rather die than surrender.", "reference_translation": "Teslim olmaktansa ölmeyi tercih eder.", "alternatives": []}
+  ],
+  "B2.05": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün saçımı kestirdim.", "reference_translation": "I had my hair cut yesterday.", "alternatives": ["I got my hair cut yesterday."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Arabamı tamir ettirmem gerekiyor.", "reference_translation": "I need to get my car repaired.", "alternatives": ["I need to have my car repaired."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She made him wash the dishes.", "reference_translation": "Ona bulaşıkları yıkattı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Doktor sigarayı bırakmamı sağladı.", "reference_translation": "The doctor got me to quit smoking.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "We are having our house painted next week.", "reference_translation": "Gelecek hafta evimizi boyatıyoruz.", "alternatives": []}
+  ],
+  "B2.06": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onun zengin bir iş insanı olduğu söyleniyor.", "reference_translation": "He is said to be a rich businessman.", "alternatives": ["It is said that he is a rich businessman."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hırsızın pencereden kaçtığına inanılıyor.", "reference_translation": "The thief is believed to have escaped through the window.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "It is expected that the economy will grow.", "reference_translation": "Ekonominin büyümesi bekleniyor.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu ilacın güvenli olduğu düşünülüyor.", "reference_translation": "This medicine is considered to be safe.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She was reported to have won the award.", "reference_translation": "Ödülü kazandığı bildirildi.", "alternatives": []}
+  ],
+  "B2.07": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana parayı çalmadığını iddia etti.", "reference_translation": "He claimed that he had not stolen the money.", "alternatives": ["He denied stealing the money."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana bir avukat tutmamı tavsiye etti.", "reference_translation": "She advised me to hire a lawyer.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "He suggested going to the cinema.", "reference_translation": "Sinemaya gitmeyi önerdi.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Geç kaldığı için özür diledi.", "reference_translation": "He apologized for being late.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She reminded me to lock the back door.", "reference_translation": "Bana arka kapıyı kilitlememi hatırlattı.", "alternatives": []}
+  ],
+  "B2.08": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hayatımda nadiren böyle güzel bir manzara gördüm.", "reference_translation": "Rarely have I seen such a beautiful view.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Eve varır varmaz telefon çaldı.", "reference_translation": "No sooner had I arrived home than the phone rang.", "alternatives": ["Hardly had I arrived home when the phone rang."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Not only did he pass the exam, but he also got the highest score.", "reference_translation": "Sadece sınavı geçmekle kalmadı, aynı zamanda en yüksek puanı aldı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu kapıyı hiçbir koşulda açmamalısın.", "reference_translation": "Under no circumstances should you open this door.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Seldom does she complain about her job.", "reference_translation": "İşinden nadiren şikayet eder.", "alternatives": []}
+  ],
+  "B2.09": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ödevini bitirdikten sonra yatağa gitti.", "reference_translation": "Having finished his homework, he went to bed.", "alternatives": ["Having finished her homework, she went to bed."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sokakta yürürken eski bir dostunu gördü.", "reference_translation": "Walking down the street, she saw an old friend.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Damaged by the storm, the roof had to be repaired.", "reference_translation": "Fırtınadan hasar gören çatının onarılması gerekti.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ne söyleyeceğini bilmeyerek sessiz kaldı.", "reference_translation": "Not knowing what to say, he remained silent.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Having lived in London for years, he speaks fluent English.", "reference_translation": "Yıllarca Londra'da yaşadığı için akıcı İngilizce konuşur.", "alternatives": []}
+  ],
+  "B2.10": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tavsiyesine güvendiğim adam müdürdü.", "reference_translation": "The man in whose advice I trusted was the manager.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Pek çok çalışan vardı, çoğu gençti.", "reference_translation": "There were many workers, most of whom were young.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "He bought three books, none of which he has read.", "reference_translation": "Hiçbirini okumadığı üç kitap satın aldı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Geç geldi ki bu herkesi sinirlendirdi.", "reference_translation": "He arrived late, which annoyed everyone.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The company for which she works is expanding rapidly.", "reference_translation": "Çalıştığı şirket hızla büyüyor.", "alternatives": []}
+  ],
+  "B2.11": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Söylediği şey beni çok şaşırttı.", "reference_translation": "What he said surprised me a lot.", "alternatives": ["What she said surprised me a lot."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Toplantıya katılıp katılmayacağını bilmiyorum.", "reference_translation": "I don't know whether he will attend the meeting.", "alternatives": ["I don't know if he will attend the meeting."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The problem is that we don't have enough time.", "reference_translation": "Sorun şu ki yeterince zamanımız yok.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Gerçeği bilmek istediğim şeydir.", "reference_translation": "What I want to know is the truth.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "How he managed to escape remains a mystery.", "reference_translation": "Nasıl kaçmayı başardığı bir gizem olarak kalıyor.", "alternatives": []}
+  ],
+  "B2.12": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Daha erken yola çıkmalıydın.", "reference_translation": "You should have left earlier.", "alternatives": ["You ought to have left earlier."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O parayı o çalmış olamaz.", "reference_translation": "He cannot have stolen that money.", "alternatives": ["He can't have stolen that money."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She must have forgotten about the meeting.", "reference_translation": "Toplantıyı unutmuş olmalı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Treni kaçırmış olabilirler.", "reference_translation": "They might have missed the train.", "alternatives": ["They may have missed the train."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "You needn't have bought so much food.", "reference_translation": "Bu kadar çok yiyecek almana gerek yoktu.", "alternatives": []}
+  ],
+  "B2.13": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın bu saatlerde plajda yüzüyor olacağım.", "reference_translation": "This time tomorrow, I will be swimming at the beach.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın saat onda çalışıyor olacak.", "reference_translation": "He will be working at ten o'clock tomorrow.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Will you be using your laptop this evening?", "reference_translation": "Bu akşam dizüstü bilgisayarını kullanıyor olacak mısın?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bütün gün toplantı yapıyor olacağız.", "reference_translation": "We will be having meetings all day.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Don't call him at noon; he will be having lunch.", "reference_translation": "Öğlen onu arama; öğle yemeği yiyor olacak.", "alternatives": []}
+  ],
+  "B2.14": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Gelecek yıla kadar projeyi bitirmiş olacağım.", "reference_translation": "By next year, I will have finished the project.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sen gelene kadar iki saattir bekliyor olacağız.", "reference_translation": "By the time you arrive, we will have been waiting for two hours.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "By 2030, they will have lived here for twenty years.", "reference_translation": "2030 yılına kadar yirmi yıldır burada yaşıyor olacaklar.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Gelecek aya kadar tüm kitapları okumuş olacak.", "reference_translation": "She will have read all the books by next month.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Will you have completed the report by Friday?", "reference_translation": "Cuma gününe kadar raporu tamamlamış olacak mısın?", "alternatives": []}
+  ],
+  "B2.15": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Uçak kalkmak üzere.", "reference_translation": "The plane is about to take off.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Başkanın yarın konuşması planlanıyor.", "reference_translation": "The president is to speak tomorrow.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The match is due to start in ten minutes.", "reference_translation": "Maçın on dakika içinde başlaması bekleniyor.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tam kapıdan çıkmak üzereydim.", "reference_translation": "I was on the verge of leaving the house.", "alternatives": ["I was about to leave the house."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Prices are bound to rise soon.", "reference_translation": "Fiyatların yakında yükselmesi kaçınılmazdır.", "alternatives": []}
+  ],
+  "B2.16": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onun bu kadar geç kalmasına katlanamıyorum.", "reference_translation": "I cannot stand his being so late.", "alternatives": ["I can't stand him being so late."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sana yardım etmeyi denedim ama olmadı.", "reference_translation": "I tried to help you, but I couldn't.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She stopped smoking last year.", "reference_translation": "Geçen yıl sigarayı bıraktı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kapıyı kilitlemeyi hatırladım.", "reference_translation": "I remembered to lock the door.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I regret telling him my secret.", "reference_translation": "Ona sırrımı söylediğime pişmanım.", "alternatives": []}
+  ],
+  "B2.17": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Her ne kadar zor olsa da deneyeceğim.", "reference_translation": "Difficult though it is, I will try.", "alternatives": ["However difficult it is, I will try."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ne kadar hızlı koşarsa koşsun yetişemez.", "reference_translation": "No matter how fast he runs, he cannot catch up.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Whereas he loves cities, his wife prefers the countryside.", "reference_translation": "O şehirleri severken, karısı kırsalı tercih eder.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Buna karşılık, ikinci yöntem daha ucuzdur.", "reference_translation": "In contrast, the second method is cheaper.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Even if it rains, the concert will take place.", "reference_translation": "Yağmur yağsa bile konser gerçekleşecek.", "alternatives": []}
+  ],
+  "B2.18": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Partiye gitmek istiyor musun? — Umarım.", "reference_translation": "Do you want to go to the party? — I hope so.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Gelmeyeceğini sanmıyorum.", "reference_translation": "I don't think so.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She bought the red dress and I bought the blue one.", "reference_translation": "O kırmızı elbiseyi aldı, ben ise maviyi aldım.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana yardım eder misin? — İsterdim ama edemem.", "reference_translation": "Can you help me? — I would like to, but I cannot.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Are they ready? — I assume so.", "reference_translation": "Hazırlar mı? — Öyle tahmin ediyorum.", "alternatives": []}
+  ],
+  "B2.19": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ne kadar çok çalışırsan o kadar çok öğrenirsin.", "reference_translation": "The harder you study, the more you learn.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hava gittikçe soğuyor.", "reference_translation": "The weather is getting colder and colder.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The sooner we start, the earlier we will finish.", "reference_translation": "Ne kadar erken başlarsak o kadar erken bitiririz.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu araba benimkinden üç kat daha pahalı.", "reference_translation": "This car is three times as expensive as mine.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "He is nowhere near as experienced as his colleague.", "reference_translation": "İş arkadaşı kadar deneyimli olmaya yakın bile değil.", "alternatives": []}
+  ],
+  "B2.20": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Öğrencilerin her birine bir kitap verildi.", "reference_translation": "Each of the students was given a book.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Odamda çok az mobilya var.", "reference_translation": "There is little furniture in my room.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "All of the equipment has been inspected.", "reference_translation": "Tüm ekipman denetlendi.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Soruların çoğunu cevaplayabildim.", "reference_translation": "I was able to answer most of the questions.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Neither of the solutions is practical.", "reference_translation": "Çözümlerin hiçbiri pratik değildir.", "alternatives": []}
+  ],
+  "B2.21": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ay Dünya'nın etrafında döner.", "reference_translation": "The moon revolves around the Earth.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hayat zorluklarla doludur.", "reference_translation": "Life is full of difficulties.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "He plays the violin very well.", "reference_translation": "Kemanı çok iyi çalar.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Körler için özel bir okul açıldı.", "reference_translation": "A special school was opened for the blind.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She went to prison for fraud.", "reference_translation": "Dolandırıcılıktan hapse girdi.", "alternatives": []}
+  ],
+
+  "C1.01": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ancak kapıyı açtığında hırsızı fark etti.", "reference_translation": "Only when he opened the door did he notice the burglar.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tepenin üzerinde eski bir kale duruyordu.", "reference_translation": "On top of the hill stood an ancient castle.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Not until much later did she realize the significance of his words.", "reference_translation": "Sözlerinin önemini ancak çok sonra fark etti.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Oraya bir daha asla ayak basmadı.", "reference_translation": "Never again did he set foot in that place.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Down came the heavy rain, flooding the valley.", "reference_translation": "Şiddetli yağmur vadide sele neden olarak yağmaya başladı.", "alternatives": []}
+  ],
+  "C1.02": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Beni en çok etkileyen şey onun cesaretiydi.", "reference_translation": "It was her courage that impressed me the most.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tek ihtiyacım olan biraz dinlenmek.", "reference_translation": "All I need is a little rest.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What surprised us was the sudden change of plan.", "reference_translation": "Bizi şaşırtan şey planın ani değişimiydi.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana gerçeği söyleyen kişi Tom'du.", "reference_translation": "It was Tom who told me the truth.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The place where we first met was a quiet cafe.", "reference_translation": "İlk buluştuğumuz yer sakin bir kafeydi.", "alternatives": []}
+  ],
+  "C1.03": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Toplantının ertelenmesini talep etti.", "reference_translation": "He demanded that the meeting be postponed.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Gerekirse sana yardım edeceğim.", "reference_translation": "Should the need arise, I will assist you.", "alternatives": ["Should it be necessary, I will help you."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "It is essential that every student attend the orientation.", "reference_translation": "Her öğrencinin oryantasyona katılması şarttır.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onun yerinde olsaydım bu teklifi reddederdim.", "reference_translation": "Were I in his position, I would reject this offer.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Had we known about the delay, we would have informed you.", "reference_translation": "Gecikmeyi bilseydik sizi bilgilendirirdik.", "alternatives": []}
+  ],
+  "C1.04": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hava izin verirse yarın yola çıkacağız.", "reference_translation": "Weather permitting, we will set off tomorrow.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Her şey söylendikten ve yapıldıktan sonra pişmanlık fayda etmez.", "reference_translation": "All things considered, regret is of no use.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The meeting having ended, everyone left the room.", "reference_translation": "Toplantı bittikten sonra herkes odadan ayrıldı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Elleri cebinde sessizce duruyordu.", "reference_translation": "He stood silently, his hands in his pockets.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Time running out, they were forced to make a hasty decision.", "reference_translation": "Zaman tükenirken acele bir karar vermek zorunda kaldılar.", "alternatives": []}
+  ],
+  "C1.05": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Şirketin yıkımı engellenemedi.", "reference_translation": "The destruction of the company could not be prevented.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yeni politikanın uygulanması zorluklara yol açtı.", "reference_translation": "The implementation of the new policy led to difficulties.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Rapid urban expansion poses serious environmental challenges.", "reference_translation": "Hızlı kentsel genişleme ciddi çevresel sorunlar doğurur.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ekonomik istikrarın sağlanması önceliktir.", "reference_translation": "The achievement of economic stability is a priority.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The sudden disappearance of the documents raised suspicion.", "reference_translation": "Belgelerin ani kaybı şüphe uyandırdı.", "alternatives": []}
+  ],
+  "C1.06": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Veriler teoriyi destekliyor gibi görünmektedir.", "reference_translation": "The data appear to support the theory.", "alternatives": ["The data seems to support the theory."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu yöntemin etkili olduğu söylenebilir.", "reference_translation": "It could be argued that this method is effective.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The findings tentatively suggest a correlation between the variables.", "reference_translation": "Bulgular değişkenler arasında bir korelasyon olduğunu geçici olarak düşündürmektedir.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sonuçların geçerli olduğu muhtemeldir.", "reference_translation": "It is likely that the results are valid.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "One might reasonably assume that the crisis is over.", "reference_translation": "Krizin bittiğini makul olarak varsayabiliriz.", "alternatives": []}
+  ],
+  "C1.07": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ayrıca, bu bulgular önceki çalışmaları pekiştirmektedir.", "reference_translation": "Furthermore, these findings reinforce previous studies.", "alternatives": ["Moreover, these findings reinforce earlier studies."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dolayısıyla, ek önlemler alınmalıdır.", "reference_translation": "Consequently, additional measures must be taken.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Notwithstanding these obstacles, the project was completed on time.", "reference_translation": "Bu engellere rağmen proje zamanında tamamlandı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Buna göre bütçe yeniden düzenlendi.", "reference_translation": "Accordingly, the budget was revised.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "In other words, the proposal was rejected outright.", "reference_translation": "Başka bir deyişle, teklif doğrudan reddedildi.", "alternatives": []}
+  ],
+  "C1.08": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Rapor hem kapsamlı hem de tarafsızdır.", "reference_translation": "The report is both comprehensive and objective.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Meseleyi en kısa sürede çözmek niyetindeyiz.", "reference_translation": "We intend to resolve the matter at our earliest convenience.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Neither the management nor the employees were satisfied with the outcome.", "reference_translation": "Ne yönetim ne de çalışanlar sonuçtan memnun kaldı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu durum kabul edilemez olarak nitelendirildi.", "reference_translation": "This state of affairs was deemed unacceptable.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "To summarize, significant structural reforms are imperative.", "reference_translation": "Özetlemek gerekirse, önemli yapısal reformlar zorunludur.", "alternatives": []}
+  ]
+}
+

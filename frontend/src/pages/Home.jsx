@@ -57,9 +57,7 @@ export default function Home() {
       <div className="home-header">
         <div>
           <h1>Hoş geldin, {firstName} 👋</h1>
-          <p style={{ color: "var(--text-muted)", fontSize: "0.9rem", marginTop: "0.2rem" }}>
-            {user?.email}
-          </p>
+          
         </div>
       </div>
 

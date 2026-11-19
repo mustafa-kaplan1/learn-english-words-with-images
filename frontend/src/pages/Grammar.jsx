@@ -1,9 +1,11 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import {
   getGrammarTopics,
   startGrammarSession,
   submitGrammarTranslation,
+  selfEvaluateGrammarTranslation,
+  reportGrammarQuestion,
 } from "../api/endpoints";
 import "../styles/grammar.css";
 
@@ -26,6 +28,9 @@ export default function Grammar() {
   const [userTranslation, setUserTranslation] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [evaluation, setEvaluation] = useState(null);
+  const [selfEvalData, setSelfEvalData] = useState(null);
+  const [selfEvalLoading, setSelfEvalLoading] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
   const [sessionHistory, setSessionHistory] = useState([]);
   const inputRef = useRef(null);
 
@@ -37,7 +42,6 @@ export default function Grammar() {
       .then((res) => {
         setTopics(res.data);
         setError("");
-        // Eğer seçili konu yeni listede yoksa sıfırlama, varsa koru
       })
       .catch(() => setError("Konular yüklenirken hata oluştu."))
       .finally(() => setLoading(false));
@@ -45,30 +49,44 @@ export default function Grammar() {
 
   // Soru değiştiğinde input'a odaklan
   useEffect(() => {
-    if (mode === "practice" && !evaluation && inputRef.current) {
+    if (mode === "practice" && !evaluation && !selfEvalData && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [currentIndex, mode, evaluation]);
+  }, [currentIndex, mode, evaluation, selfEvalData]);
 
-  // Enter ile gönderme / sonraki soruya geçme
+  // Klavye Kısayolları (Keyboard Shortcuts)
   useEffect(() => {
-    if (mode !== "practice") return;
+    if (mode !== "practice" || showReportModal) return;
 
     const handleKeyDown = (e) => {
+      // Input içindeyken 1,2,3 dinleme, sadece Enter'a bak
+      const isInputFocused = document.activeElement === inputRef.current;
+
       if (e.key === "Enter" && !e.shiftKey) {
         if (evaluation) {
           e.preventDefault();
           handleNextQuestion();
-        } else if (userTranslation.trim() && !submitting) {
+        } else if (!selfEvalData && userTranslation.trim() && !submitting) {
           e.preventDefault();
           handleSubmit();
+        }
+      } else if (selfEvalData && !selfEvalLoading && !isInputFocused) {
+        if (e.key === "1" || e.key === "ArrowRight") {
+          e.preventDefault();
+          handleSelfEval("know");
+        } else if (e.key === "2" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          handleSelfEval("dont_know");
+        } else if (e.key === "3" || e.key === "ArrowDown") {
+          e.preventDefault();
+          handleSelfEval("ask_ai");
         }
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [mode, evaluation, userTranslation, submitting, currentIndex, questions]);
+  }, [mode, evaluation, selfEvalData, selfEvalLoading, userTranslation, submitting, showReportModal]);
 
   const handleStartSession = async (topicIdToStart) => {
     const targetId = topicIdToStart || selectedTopicId;
@@ -85,6 +103,7 @@ export default function Grammar() {
       setCurrentIndex(0);
       setUserTranslation("");
       setEvaluation(null);
+      setSelfEvalData(null);
       setSessionHistory([]);
       setMode("practice");
     } catch (err) {
@@ -98,12 +117,50 @@ export default function Grammar() {
     if (!userTranslation.trim() || submitting) return;
     const currentQ = questions[currentIndex];
     setSubmitting(true);
+    setSelfEvalData(null);
+    setEvaluation(null);
+
     try {
       const res = await submitGrammarTranslation(
         currentQ.id,
         userTranslation.trim()
       );
+
+      if (res.data.matched) {
+        // Yerel kontrolde kesin doğru eşleşti
+        setEvaluation(res.data);
+        setSessionHistory((prev) => [
+          ...prev,
+          {
+            question: currentQ,
+            userTranslation: userTranslation.trim(),
+            evaluation: res.data,
+          },
+        ]);
+      } else {
+        // Yerel kontrolde emin olunamadı -> Doğru çeviriyi göster ve self-eval başlat
+        setSelfEvalData(res.data);
+      }
+    } catch (err) {
+      alert(err.response?.data?.detail || "Değerlendirme alınamadı.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleSelfEval = async (action) => {
+    if (selfEvalLoading) return;
+    const currentQ = questions[currentIndex];
+    setSelfEvalLoading(true);
+
+    try {
+      const res = await selfEvaluateGrammarTranslation(
+        currentQ.id,
+        action,
+        userTranslation.trim()
+      );
       setEvaluation(res.data);
+      setSelfEvalData(null);
       setSessionHistory((prev) => [
         ...prev,
         {
@@ -113,9 +170,9 @@ export default function Grammar() {
         },
       ]);
     } catch (err) {
-      alert(err.response?.data?.detail || "Değerlendirme alınamadı.");
+      alert(err.response?.data?.detail || "Değerlendirme kaydedilemedi.");
     } finally {
-      setSubmitting(false);
+      setSelfEvalLoading(false);
     }
   };
 
@@ -126,6 +183,7 @@ export default function Grammar() {
       setCurrentIndex((i) => i + 1);
       setUserTranslation("");
       setEvaluation(null);
+      setSelfEvalData(null);
     }
   };
 
@@ -166,12 +224,12 @@ export default function Grammar() {
           ))}
         </div>
 
-        {/* Kontrol Çubuğu */}
+        {/* Kontrol Çubuğu (Seçilen konu tek bir yerde burada yazar) */}
         <div className="gm-controls">
           <div className="gm-controls-left">
             <span>
               {selectedTopicObj ? (
-                <>Seçilen Konu: <strong>{selectedTopicObj.code} {selectedTopicObj.title}</strong></>
+                <>Seçilen Konu: <strong>{selectedTopicObj.code} — {selectedTopicObj.title}</strong></>
               ) : (
                 <span style={{ color: "var(--text-muted)" }}>Bir konu kartına tıklayın</span>
               )}
@@ -196,7 +254,7 @@ export default function Grammar() {
 
         {error && <div className="error-msg">{error}</div>}
 
-        {/* Konu Kartları */}
+        {/* Konu Kartları (Radio button simgeleri kaldırıldı) */}
         {loading ? (
           <div className="loading">Konular yükleniyor...</div>
         ) : (
@@ -216,9 +274,6 @@ export default function Grammar() {
                         {t.level}
                       </span>
                     </div>
-                    <span style={{ fontSize: "1.1rem" }}>
-                      {isSelected ? "🔘" : "⚪"}
-                    </span>
                   </div>
 
                   <h3 className="gm-card-title">{t.title}</h3>
@@ -236,18 +291,13 @@ export default function Grammar() {
           </div>
         )}
 
-        {/* Başlat Çubuğu */}
+        {/* Başlat Çubuğu (Mükerrer başlık kaldırıldı, sadece eylem butonu ve özet bilgi) */}
         <div className="gm-start-bar">
           <div>
-            <div style={{ fontWeight: 700 }}>
+            <div style={{ fontSize: "0.9rem", color: "var(--text-muted)" }}>
               {selectedTopicObj
-                ? `${selectedTopicObj.code} - ${selectedTopicObj.title}`
-                : "Başlamak için yukarıdan bir konu seçin"}
-            </div>
-            <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
-              {selectedTopicObj
-                ? `Yalnızca bu konuyu içeren, ${selectedTopicObj.level} seviyesine uygun ${questionCount} çeviri sorusu sorulacak.`
-                : "Her oturum tek bir gramer kuralına odaklanır."}
+                ? `${selectedTopicObj.level} seviyesinde ${questionCount} çeviri sorusu sorulacak.`
+                : "Başlamak için lütfen yukarıdan bir konu seçin."}
             </div>
           </div>
           <button
@@ -262,7 +312,7 @@ export default function Grammar() {
     );
   }
 
-  /* ────────────────────────── 2. MOD: SADELEŞTİRİLMİŞ PRATİK EKRANI ────────────────────────── */
+  /* ────────────────────────── 2. MOD: PRATİK EKRANI ────────────────────────── */
   if (mode === "practice") {
     const currentQ = questions[currentIndex];
     const isTrToEn = currentQ?.source_lang === "tr";
@@ -297,15 +347,22 @@ export default function Grammar() {
 
         <div className="gm-practice-container">
           <div className="gm-practice-card">
-            {/* Meta Bilgiler */}
+            {/* Meta Bilgiler & Hata Bildir Butonu */}
             <div className="gm-question-meta">
               <span className="gm-lang-direction">{directionBadge}</span>
-              <div className="gm-topics-tags">
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
                 {currentTopic && (
                   <span className="gm-topic-tag">
                     {currentTopic.code} {currentTopic.title}
                   </span>
                 )}
+                <button
+                  className="gm-report-trigger"
+                  onClick={() => setShowReportModal(true)}
+                  title="Soruda bir hata veya eksiklik varsa bildirin"
+                >
+                  ⚠️ Hata Bildir
+                </button>
               </div>
             </div>
 
@@ -325,10 +382,10 @@ export default function Grammar() {
                 placeholder={isTrToEn ? "İngilizce çeviriyi buraya yazın..." : "Türkçe çeviriyi buraya yazın..."}
                 value={userTranslation}
                 onChange={(e) => setUserTranslation(e.target.value)}
-                disabled={submitting || !!evaluation}
+                disabled={submitting || !!evaluation || !!selfEvalData}
               />
 
-              {!evaluation && (
+              {!evaluation && !selfEvalData && (
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "0.78rem", color: "var(--text-muted)" }}>
                     <kbd className="wl-inline-kbd">Enter</kbd> ile kontrol et
@@ -339,13 +396,77 @@ export default function Grammar() {
                     onClick={handleSubmit}
                     disabled={!userTranslation.trim() || submitting}
                   >
-                    {submitting ? "Değerlendiriliyor..." : "Kontrol Et ➔"}
+                    {submitting ? "Kontrol Ediliyor..." : "Kontrol Et ➔"}
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Hızlı & Net Değerlendirme Kartı */}
+            {/* Kendi Kendini Değerlendir (Self-Evaluation) Kutusu */}
+            {selfEvalData && !evaluation && (
+              <div className="gm-self-eval-box">
+                <div className="gm-self-eval-title">
+                  <span>🧐 Çevirinizi Karşılaştırın:</span>
+                  <span style={{ fontSize: "0.8rem", color: "var(--text-muted)", fontWeight: 400 }}>
+                    Kısayollar: 1 (Doğru), 2 (Yanlış), 3 (Yapay Zeka)
+                  </span>
+                </div>
+
+                <div className="gm-answers-comparison">
+                  <div className="gm-answer-row">
+                    <span className="gm-answer-label">Sizin Çeviriniz:</span>
+                    <span className="gm-answer-val gm-val-user">
+                      {selfEvalData.user_translation || userTranslation}
+                    </span>
+                  </div>
+
+                  <div className="gm-answer-row">
+                    <span className="gm-answer-label">Doğru Referans Çeviri:</span>
+                    <span className="gm-answer-val gm-val-ref">
+                      {selfEvalData.correct_translation}
+                    </span>
+                    {selfEvalData.alternatives?.length > 0 && (
+                      <div className="gm-alt-chips">
+                        <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", alignSelf: "center" }}>
+                          Kabul edilen alternatifler:
+                        </span>
+                        {selfEvalData.alternatives.map((alt, i) => (
+                          <span key={i} className="gm-alt-chip">{alt}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="gm-self-eval-actions">
+                  <button
+                    className="gm-eval-btn gm-btn-know"
+                    onClick={() => handleSelfEval("know")}
+                    disabled={selfEvalLoading}
+                  >
+                    ✅ Doğru Bildim (+1)
+                  </button>
+
+                  <button
+                    className="gm-eval-btn gm-btn-dont"
+                    onClick={() => handleSelfEval("dont_know")}
+                    disabled={selfEvalLoading}
+                  >
+                    ❌ Yanlış Bildim (-2)
+                  </button>
+
+                  <button
+                    className="gm-eval-btn gm-btn-ai"
+                    onClick={() => handleSelfEval("ask_ai")}
+                    disabled={selfEvalLoading}
+                  >
+                    {selfEvalLoading ? "Analiz Ediliyor..." : "🤖 Yapay Zeka Kontrol Etsin"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Sonuç & Değerlendirme Kartı */}
             {evaluation && (
               <div className={`gm-feedback-card gm-fb-${evaluation.result}`}>
                 <div className="gm-fb-header">
@@ -361,18 +482,16 @@ export default function Grammar() {
                   )}
                 </div>
 
-                {/* Sadece Hata / Geliştirme durumunda açıklama ve Doğru Çeviri göster */}
-                {evaluation.result !== "correct" ? (
-                  <>
-                    {evaluation.feedback && (
-                      <p className="gm-fb-text">{evaluation.feedback}</p>
-                    )}
-                    <div className="gm-fb-reference">
-                      <span className="gm-fb-ref-label">Doğru Çeviri:</span>
-                      <span className="gm-fb-ref-text">{evaluation.correct_translation}</span>
-                    </div>
-                  </>
-                ) : null}
+                {evaluation.feedback && (
+                  <p className="gm-fb-text">{evaluation.feedback}</p>
+                )}
+
+                {evaluation.result !== "correct" && evaluation.correct_translation && (
+                  <div className="gm-fb-reference">
+                    <span className="gm-fb-ref-label">Doğru Çeviri:</span>
+                    <span className="gm-fb-ref-text">{evaluation.correct_translation}</span>
+                  </div>
+                )}
 
                 <button className="gm-next-btn" onClick={handleNextQuestion}>
                   {currentIndex + 1 >= questions.length ? "Sonuçları Gör ➔" : "Sonraki Soru ➔"}
@@ -382,6 +501,14 @@ export default function Grammar() {
             )}
           </div>
         </div>
+
+        {/* Hata Bildir Modalı */}
+        {showReportModal && (
+          <GrammarReportModal
+            question={currentQ}
+            onClose={() => setShowReportModal(false)}
+          />
+        )}
       </div>
     );
   }
@@ -398,7 +525,7 @@ export default function Grammar() {
         <div className="wl-done-card">
           <div className="wl-done-header">
             <div className="wl-done-badge">🎉 Oturum Tamamlandı!</div>
-            <h1>{currentTopic ? `${currentTopic.code} ${currentTopic.title}` : "Gramer Raporu"}</h1>
+            <h1>{currentTopic ? `${currentTopic.code} — ${currentTopic.title}` : "Gramer Raporu"}</h1>
             <p className="wl-done-subtitle">
               Toplam <strong>{sessionHistory.length}</strong> soruluk çalışma tamamlandı.
             </p>
@@ -429,45 +556,44 @@ export default function Grammar() {
             </div>
           </div>
 
-          <div className="wl-done-actions">
-            <button className="wl-done-btn primary" onClick={() => handleStartSession(selectedTopicId)}>
-              🔄 Bu Konuyu Tekrar Et
-            </button>
-            <button className="wl-done-btn secondary" onClick={() => setMode("select")}>
-              📋 Başka Konu Seç
-            </button>
-            <Link to="/grammar-library" className="wl-done-btn secondary">
-              🗂️ Gramer Kitaplığı
-            </Link>
-          </div>
-
-          <div className="wl-done-list-section">
-            <h3 style={{ fontSize: "1.1rem", marginBottom: "0.5rem" }}>Soru Dökümü</h3>
-            <div className="wl-done-words-list">
-              {sessionHistory.map((item, i) => (
-                <div key={i} className={`wl-done-word-row wl-status-${item.evaluation.result === 'correct' ? 'know' : (item.evaluation.result === 'imperfect' ? 'unsure' : 'dont_know')}`} style={{ gridTemplateColumns: "1fr" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.3rem" }}>
-                    <span style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
-                      {item.question.source_lang.toUpperCase()} ➔ {item.question.target_lang.toUpperCase()}
+          <div className="wl-done-history">
+            <h3 className="wl-history-title">Soru Detayları</h3>
+            <div className="wl-history-list">
+              {sessionHistory.map((item, idx) => (
+                <div key={idx} className="wl-history-item">
+                  <div className="wl-history-word">
+                    <span className="wl-history-en">{item.question.question_text}</span>
+                    <span className="wl-history-tr">
+                      Sizin Çeviriniz: <strong>{item.userTranslation}</strong>
                     </span>
-                    <span className={`tag-${item.evaluation.result === 'correct' ? 'know' : (item.evaluation.result === 'imperfect' ? 'unsure' : 'dont')}`}>
-                      {item.evaluation.result === "correct" ? "✅ Doğru (+1)" : (item.evaluation.result === "imperfect" ? "🤔 Geliştirilebilir (-1)" : "❌ Yanlış (-2)")}
+                    {item.evaluation.result !== "correct" && (
+                      <span style={{ fontSize: "0.8rem", color: "var(--accent)", marginTop: "0.2rem" }}>
+                        Doğrusu: {item.evaluation.correct_translation || item.question.reference_translation}
+                      </span>
+                    )}
+                  </div>
+                  <div className="wl-history-right">
+                    <span className={`wl-history-badge wl-badge-${item.evaluation.result === "correct" ? "know" : (item.evaluation.result === "imperfect" ? "unsure" : "dont")}`}>
+                      {item.evaluation.result === "correct" && "+1 Doğru"}
+                      {item.evaluation.result === "imperfect" && "-1 Pürüz"}
+                      {item.evaluation.result === "wrong" && "-2 Yanlış"}
                     </span>
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: "1rem", marginBottom: "0.2rem" }}>
-                    {item.question.question_text}
-                  </div>
-                  <div style={{ fontSize: "0.9rem", color: "var(--text-muted)", marginBottom: "0.2rem" }}>
-                    Senin Çevirin: <em>{item.userTranslation}</em>
-                  </div>
-                  {item.evaluation.result !== "correct" && (
-                    <div style={{ fontSize: "0.85rem", color: "var(--accent)" }}>
-                      Doğru Çeviri: <strong>{item.evaluation.correct_translation}</strong>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
+          </div>
+
+          <div className="wl-done-actions">
+            <button className="btn btn-secondary" onClick={() => setMode("select")}>
+              Başka Konu Seç
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={() => handleStartSession(currentTopic?.id)}
+            >
+              Bu Konuyu Tekrar Çalış ➔
+            </button>
           </div>
         </div>
       </div>
@@ -475,4 +601,92 @@ export default function Grammar() {
   }
 
   return null;
+}
+
+/* ── Hata Bildirimi Modalı (Kelime modülü gibi) ── */
+function GrammarReportModal({ question, onClose }) {
+  const [reason, setReason] = useState("wrong_translation");
+  const [comment, setComment] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleSend = async () => {
+    setSending(true);
+    try {
+      await reportGrammarQuestion(question.id, reason, comment);
+      setSent(true);
+    } catch {
+      alert("Hata bildirimi gönderilemedi.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal report-modal" onClick={(e) => e.stopPropagation()}>
+        {sent ? (
+          <>
+            <h2>✅ Bildiriminiz Alındı</h2>
+            <p className="modal-sub">Geri bildiriminiz için teşekkürler, inceleyeceğiz.</p>
+            <button className="btn btn-primary" style={{ marginTop: "1rem" }} onClick={onClose}>
+              Kapat
+            </button>
+          </>
+        ) : (
+          <>
+            <h2>Gramer Sorusu Sorun Bildir</h2>
+            <p className="modal-sub" style={{ fontStyle: "italic", marginTop: "0.4rem" }}>
+              "{question.question_text}"
+            </p>
+
+            <div className="gm-report-form">
+              <div>
+                <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-muted)" }}>
+                  Hata Türü:
+                </label>
+                <select
+                  className="gm-report-select"
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                >
+                  <option value="wrong_translation">Hatalı / Yanlış Çeviri</option>
+                  <option value="typo">Yazım / İmla Hatası</option>
+                  <option value="missing_alternative">Eksik Doğru Alternatif</option>
+                  <option value="other">Diğer</option>
+                </select>
+              </div>
+
+              <div>
+                <label style={{ fontSize: "0.82rem", fontWeight: 700, color: "var(--text-muted)" }}>
+                  Açıklama (İsteğe bağlı):
+                </label>
+                <textarea
+                  className="gm-report-textarea"
+                  rows={3}
+                  placeholder="Doğrusu ne olmalı veya nasıl geliştirilebilir?"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </div>
+
+              <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
+                <button className="btn btn-secondary" style={{ flex: 1 }} onClick={onClose}>
+                  Vazgeç
+                </button>
+                <button
+                  className="btn btn-primary"
+                  style={{ flex: 1 }}
+                  onClick={handleSend}
+                  disabled={sending}
+                >
+                  {sending ? "Gönderiliyor..." : "Raporu Gönder"}
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }

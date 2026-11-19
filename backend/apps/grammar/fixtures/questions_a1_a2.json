@@ -1,0 +1,241 @@
+{
+  "A1.01": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ben bir öğrenciyim.", "reference_translation": "I am a student.", "alternatives": ["I'm a student."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O çok yorgun.", "reference_translation": "He is very tired.", "alternatives": ["He's very tired.", "She is very tired.", "She's very tired."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They are in the garden.", "reference_translation": "Onlar bahçedeler.", "alternatives": ["Onlar bahçede."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sen hazır mısın?", "reference_translation": "Are you ready?", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "We are not late.", "reference_translation": "Geç kalmadık.", "alternatives": ["Biz geç kalmadık.", "Biz geç değiliz."]}
+  ],
+  "A1.02": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu benim arabam.", "reference_translation": "This is my car.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onun adı Tom.", "reference_translation": "His name is Tom.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Where is your house?", "reference_translation": "Evin nerede?", "alternatives": ["Eviniz nerede?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu Tom'un kitabı.", "reference_translation": "This is Tom's book.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "This phone is hers.", "reference_translation": "Bu telefon onun.", "alternatives": ["Bu telefon onundur."]}
+  ],
+  "A1.03": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Masada bir elma var.", "reference_translation": "There is an apple on the table.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O bir doktordur.", "reference_translation": "He is a doctor.", "alternatives": ["She is a doctor.", "He's a doctor.", "She's a doctor."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "These cats are very cute.", "reference_translation": "Bu kediler çok sevimli.", "alternatives": ["Bu kediler çok tatlı."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "İki kutu görüyorum.", "reference_translation": "I see two boxes.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The children are playing outside.", "reference_translation": "Çocuklar dışarıda oynuyor.", "alternatives": ["Çocuklar dışarıda oynuyorlar."]}
+  ],
+  "A1.04": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu bir kalem.", "reference_translation": "This is a pen.", "alternatives": ["This is a pencil."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Şunlar benim ayakkabılarım.", "reference_translation": "Those are my shoes.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "There is a park near here.", "reference_translation": "Buraya yakın bir park var.", "alternatives": ["Buranın yakınında bir park var."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Odada üç sandalye var.", "reference_translation": "There are three chairs in the room.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Is there any water in the bottle?", "reference_translation": "Şişede hiç su var mı?", "alternatives": ["Şişede su var mı?"]}
+  ],
+  "A1.05": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Her gün İngilizce çalışırım.", "reference_translation": "I study English every day.", "alternatives": ["I study English everyday."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O Londra'da yaşıyor.", "reference_translation": "He lives in London.", "alternatives": ["She lives in London."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "My father drives to work.", "reference_translation": "Babam işe arabayla gider.", "alternatives": ["Babam işe arabayla gidiyor."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Güneş doğudan doğar.", "reference_translation": "The sun rises in the east.", "alternatives": ["The sun rises from the east."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They always wake up early.", "reference_translation": "Onlar her zaman erken uyanırlar.", "alternatives": ["Onlar hep erken uyanır.", "Her zaman erken kalkarlar."]}
+  ],
+  "A1.06": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kahve sevmem.", "reference_translation": "I do not like coffee.", "alternatives": ["I don't like coffee."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O et yemez.", "reference_translation": "He does not eat meat.", "alternatives": ["He doesn't eat meat.", "She does not eat meat.", "She doesn't eat meat."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Do you speak German?", "reference_translation": "Almanca konuşur musun?", "alternatives": ["Almanca biliyor musun?", "Almanca konuşuyor musun?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O burada mı çalışıyor?", "reference_translation": "Does he work here?", "alternatives": ["Does she work here?"]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "We don't watch TV on weekdays.", "reference_translation": "Hafta içi televizyon izlemeyiz.", "alternatives": ["Hafta içleri televizyon izlemeyiz."]}
+  ],
+  "A1.07": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "İki kız kardeşim var.", "reference_translation": "I have two sisters.", "alternatives": ["I have got two sisters.", "I've got two sisters."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onun yeni bir bisikleti var.", "reference_translation": "He has a new bicycle.", "alternatives": ["He has got a new bicycle.", "He's got a new bike.", "She has a new bike."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Do you have any pets?", "reference_translation": "Hiç evcil hayvanın var mı?", "alternatives": ["Evcil hayvanın var mı?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Büyük bir bahçemiz var.", "reference_translation": "We have a big garden.", "alternatives": ["We've got a big garden.", "We have got a big garden."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She doesn't have a car.", "reference_translation": "Onun arabası yok.", "alternatives": ["Onun bir arabası yok."]}
+  ],
+  "A1.08": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kahvaltıda genellikle çay içerim.", "reference_translation": "I usually drink tea at breakfast.", "alternatives": ["I usually drink tea for breakfast."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O asla yalan söylemez.", "reference_translation": "He never tells lies.", "alternatives": ["She never tells lies.", "He never lies."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I prefer reading to watching TV.", "reference_translation": "Kitap okumayı televizyon izlemeye tercih ederim.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Biz bazen sinemaya gideriz.", "reference_translation": "We sometimes go to the cinema.", "alternatives": ["We sometimes go to the movies."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She always forgets her keys.", "reference_translation": "O her zaman anahtarlarını unutur.", "alternatives": ["Anahtarlarını hep unutur."]}
+  ],
+  "A1.09": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Şu anda kitap okuyorum.", "reference_translation": "I am reading a book right now.", "alternatives": ["I'm reading a book now.", "I am reading a book at the moment."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O dışarıda koşuyor.", "reference_translation": "He is running outside.", "alternatives": ["He's running outside.", "She is running outside.", "She's running outside."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What are you doing?", "reference_translation": "Ne yapıyorsun?", "alternatives": ["Şu an ne yapıyorsun?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yağmur yağıyor.", "reference_translation": "It is raining.", "alternatives": ["It's raining."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They are cooking dinner.", "reference_translation": "Akşam yemeği pişiriyorlar.", "alternatives": ["Onlar akşam yemeği hazırlıyorlar."]}
+  ],
+  "A1.10": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yüzebilirim.", "reference_translation": "I can swim.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O gitar çalamaz.", "reference_translation": "He cannot play the guitar.", "alternatives": ["He can't play the guitar.", "She can't play the guitar."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Please open the window.", "reference_translation": "Lütfen pencereyi aç.", "alternatives": ["Lütfen pencereyi açınız."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Haydi sinemaya gidelim.", "reference_translation": "Let's go to the cinema.", "alternatives": ["Let's go to the movies."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Don't run in the corridor.", "reference_translation": "Koridorda koşma.", "alternatives": ["Koridorda koşmayın."]}
+  ],
+  "A1.11": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Nerede yaşıyorsun?", "reference_translation": "Where do you live?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O kim?", "reference_translation": "Who is that?", "alternatives": ["Who is he?", "Who is she?"]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "When is your birthday?", "reference_translation": "Doğum günün ne zaman?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Neden üzgünsün?", "reference_translation": "Why are you sad?", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What time does the train arrive?", "reference_translation": "Tren saat kaçta varıyor?", "alternatives": ["Tren saat kaçta gelir?"]}
+  ],
+  "A1.12": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Saat tam üç.", "reference_translation": "It is three o'clock.", "alternatives": ["It's three o'clock."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kitap masanın üstünde.", "reference_translation": "The book is on the table.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "We meet on Mondays.", "reference_translation": "Pazartesi günleri buluşuruz.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kedi sandalyenin altında.", "reference_translation": "The cat is under the chair.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The lesson starts at nine.", "reference_translation": "Ders saat dokuzda başlıyor.", "alternatives": ["Ders dokuzda başlar."]}
+  ],
+  "A1.13": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Biraz süt istiyorum.", "reference_translation": "I want some milk.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hiç param yok.", "reference_translation": "I don't have any money.", "alternatives": ["I have no money.", "I do not have any money."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I am tired but I am happy.", "reference_translation": "Yorgunum ama mutluyum.", "alternatives": ["Yorgunum fakat mutluyum."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Burada çok insan var.", "reference_translation": "There are many people here.", "alternatives": ["There are a lot of people here."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She stayed at home because it was cold.", "reference_translation": "Hava soğuk olduğu için evde kaldı.", "alternatives": []}
+  ],
+  "A1.14": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana yardım edebilir misin?", "reference_translation": "Can you help me?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onu her gün görüyorum.", "reference_translation": "I see him every day.", "alternatives": ["I see her every day."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Listen to them carefully.", "reference_translation": "Onları dikkatlice dinle.", "alternatives": ["Onları dikkatle dinleyin."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bize hikayeyi anlattı.", "reference_translation": "He told us the story.", "alternatives": ["She told us the story."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Do you know her?", "reference_translation": "Onu tanıyor musun?", "alternatives": []}
+  ],
+  "A2.01": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün çok yorgundum.", "reference_translation": "I was very tired yesterday.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onlar geçen hafta buradaydı.", "reference_translation": "They were here last week.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Where were you yesterday?", "reference_translation": "Dün neredeydin?", "alternatives": ["Dün neredeydiniz?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hava dün yağmurlu değildi.", "reference_translation": "The weather was not rainy yesterday.", "alternatives": ["It was not rainy yesterday.", "It wasn't rainy yesterday."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She was at the hospital.", "reference_translation": "O hastanedeydi.", "alternatives": []}
+  ],
+  "A2.02": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün yeni bir araba satın aldım.", "reference_translation": "I bought a new car yesterday.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün gece film izlemedik.", "reference_translation": "We did not watch a movie last night.", "alternatives": ["We didn't watch a film last night."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Did you see my keys?", "reference_translation": "Anahtarlarımı gördün mü?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O geçen pazar mektup yazdı.", "reference_translation": "He wrote a letter last Sunday.", "alternatives": ["She wrote a letter last Sunday."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They went to Paris last summer.", "reference_translation": "Geçen yaz Paris'e gittiler.", "alternatives": []}
+  ],
+  "A2.03": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün saat sekizde uyuyordum.", "reference_translation": "I was sleeping at eight yesterday.", "alternatives": ["I was sleeping at eight o'clock yesterday."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Onlar parkta yürüyordu.", "reference_translation": "They were walking in the park.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What were you doing at that time?", "reference_translation": "O sırada ne yapıyordun?", "alternatives": ["O vakitte ne yapıyordunuz?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O müzik dinlemiyordu.", "reference_translation": "He was not listening to music.", "alternatives": ["She wasn't listening to music."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "It was snowing all afternoon.", "reference_translation": "Bütün öğleden sonra kar yağıyordu.", "alternatives": []}
+  ],
+  "A2.04": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Telefon çaldığında televizyon izliyordum.", "reference_translation": "I was watching TV when the phone rang.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yemek pişirirken parmağını kesti.", "reference_translation": "She cut her finger while she was cooking.", "alternatives": ["He cut his finger while he was cooking."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "When I arrived, they were having lunch.", "reference_translation": "Ben vardığımda onlar öğle yemeği yiyorlardı.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dışarı çıktığımızda yağmur yağıyordu.", "reference_translation": "It was raining when we went out.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "While we were waiting for the bus, it started to snow.", "reference_translation": "Biz otobüs beklerken kar yağmaya başladı.", "alternatives": []}
+  ],
+  "A2.05": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın yeni bir bilgisayar satın alacağım.", "reference_translation": "I am going to buy a new computer tomorrow.", "alternatives": ["I'm going to buy a new computer tomorrow."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bence yarın yağmur yağacak.", "reference_translation": "I think it will rain tomorrow.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Look at the dark clouds; it is going to rain.", "reference_translation": "Kara bulutlara bak, yağmur yağacak.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sana yardım edeceğim.", "reference_translation": "I will help you.", "alternatives": ["I'll help you."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Are you going to attend the meeting?", "reference_translation": "Toplantıya katılacak mısın?", "alternatives": []}
+  ],
+  "A2.06": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu akşam doktorla görüşüyorum.", "reference_translation": "I am seeing the doctor this evening.", "alternatives": ["I'm seeing the doctor tonight."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın sabah Londra'ya uçuyoruz.", "reference_translation": "We are flying to London tomorrow morning.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The train leaves at six tomorrow.", "reference_translation": "Tren yarın saat altıda kalkıyor.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hafta sonu bir parti veriyorlar.", "reference_translation": "They are having a party this weekend.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "What are you doing tonight?", "reference_translation": "Bu gece ne yapıyorsun?", "alternatives": ["Bu akşam ne yapıyorsun?"]}
+  ],
+  "A2.07": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu araba diğerinden daha hızlı.", "reference_translation": "This car is faster than the other one.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O sınıftaki en uzun öğrencidir.", "reference_translation": "He is the tallest student in the class.", "alternatives": ["She is the tallest student in the class."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Mount Everest is the highest mountain in the world.", "reference_translation": "Everest Dağı dünyadaki en yüksek dağdır.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sağlık paradan daha önemlidir.", "reference_translation": "Health is more important than money.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Today is colder than yesterday.", "reference_translation": "Bugün dünden daha soğuk.", "alternatives": []}
+  ],
+  "A2.08": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O benim kadar hızlı koşar.", "reference_translation": "He runs as fast as me.", "alternatives": ["He runs as fast as I do.", "She runs as fast as me."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu film ilki kadar ilginç değil.", "reference_translation": "This movie is not as interesting as the first one.", "alternatives": ["This film is not as interesting as the first one."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She is as tall as her brother.", "reference_translation": "O erkek kardeşi kadar uzundur.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ben senin kadar zengin değilim.", "reference_translation": "I am not as rich as you.", "alternatives": ["I'm not as rich as you."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The room is not as big as ours.", "reference_translation": "Oda bizimki kadar büyük değil.", "alternatives": []}
+  ],
+  "A2.09": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kurallara uymak zorundasın.", "reference_translation": "You must follow the rules.", "alternatives": ["You have to obey the rules."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Burada sigara içmemelisin.", "reference_translation": "You must not smoke here.", "alternatives": ["You mustn't smoke here."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "You should see a doctor.", "reference_translation": "Bir doktora görünmelisin.", "alternatives": ["Bir doktora gitmelisin."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın erken kalkmak zorunda değilim.", "reference_translation": "I do not have to wake up early tomorrow.", "alternatives": ["I don't have to wake up early tomorrow."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Students have to wear a uniform.", "reference_translation": "Öğrenciler üniforma giymek zorundadır.", "alternatives": []}
+  ],
+  "A2.10": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Çocukken çok hızlı koşabiliyordum.", "reference_translation": "I could run very fast when I was a child.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Tuzu uzatabilir misiniz?", "reference_translation": "Could you pass the salt, please?", "alternatives": ["Could you pass the salt?"]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Could you open the door for me?", "reference_translation": "Kapıyı benim için açabilir misiniz?", "alternatives": ["Kapıyı benim için açar mısınız?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün toplantıya katılamadı.", "reference_translation": "He could not attend the meeting yesterday.", "alternatives": ["He couldn't attend the meeting yesterday.", "She couldn't attend the meeting yesterday."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Could I speak to the manager?", "reference_translation": "Müdürle konuşabilir miyim?", "alternatives": []}
+  ],
+  "A2.11": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yeni bir dil öğrenmek istiyorum.", "reference_translation": "I want to learn a new language.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bir fincan kahve ister misiniz?", "reference_translation": "Would you like a cup of coffee?", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She hopes to pass the exam.", "reference_translation": "Sınavı geçmeyi umuyor.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kitap okumaktan keyif alırım.", "reference_translation": "I enjoy reading books.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They decided to stay at home.", "reference_translation": "Evde kalmaya karar verdiler.", "alternatives": []}
+  ],
+  "A2.12": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Kendime baktım.", "reference_translation": "I looked at myself.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O çok dikkatli araba kullanır.", "reference_translation": "He drives very carefully.", "alternatives": ["She drives very carefully."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They built the house themselves.", "reference_translation": "Evi kendileri inşa ettiler.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yemek pişirirken kendini kesti.", "reference_translation": "He cut himself while cooking.", "alternatives": ["She cut herself while cooking."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Please speak slowly.", "reference_translation": "Lütfen yavaşça konuşun.", "alternatives": ["Lütfen yavaş konuşun."]}
+  ],
+  "A2.13": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Çorba içmek için çok sıcak.", "reference_translation": "The soup is too hot to drink.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Araba almak için yeterince param var.", "reference_translation": "I have enough money to buy a car.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "He is old enough to drive.", "reference_translation": "O araba sürecek yaştadır.", "alternatives": ["Araba sürmek için yeterince büyük."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Hava çok soğuk, bu yüzden evde kaldık.", "reference_translation": "It was very cold, so we stayed at home.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The box is too heavy to lift.", "reference_translation": "Kutu kaldırmak için çok ağır.", "alternatives": []}
+  ],
+  "A2.14": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Eve vardığımda seni arayacağım.", "reference_translation": "I will call you when I arrive home.", "alternatives": ["I'll call you when I get home."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dışarı çıkmadan önce ödevini bitir.", "reference_translation": "Finish your homework before you go out.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "As soon as he arrives, we will start.", "reference_translation": "O varır varmaz başlayacağız.", "alternatives": ["O gelir gelmez başlayacağız."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sen dönene kadar burada bekleyeceğim.", "reference_translation": "I will wait here until you return.", "alternatives": ["I'll wait here until you come back."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Wash your hands before eating.", "reference_translation": "Yemekten önce ellerini yıka.", "alternatives": ["Yemek yemeden önce ellerinizi yıkayın."]}
+  ],
+  "A2.15": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yanımda oturan adam bir yazardır.", "reference_translation": "The man who is sitting next to me is a writer.", "alternatives": ["The man sitting next to me is a writer."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün aldığım kitap çok iyi.", "reference_translation": "The book which I bought yesterday is very good.", "alternatives": ["The book that I bought yesterday is very good."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "This is the house where I was born.", "reference_translation": "Bu doğduğum evdir.", "alternatives": ["Doğduğum ev burasıdır."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bana yardım eden kadını tanıyorum.", "reference_translation": "I know the woman who helped me.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "The car that broke down was very old.", "reference_translation": "Bozulan araba çok eskiydi.", "alternatives": []}
+  ],
+  "A2.16": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Anahtarlarımı kaybettim.", "reference_translation": "I have lost my keys.", "alternatives": ["I've lost my keys."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "O henüz ödevini bitirmedi.", "reference_translation": "He has not finished his homework yet.", "alternatives": ["He hasn't finished his homework yet.", "She hasn't finished her homework yet."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Have you ever been to London?", "reference_translation": "Hiç Londra'da bulundun mu?", "alternatives": ["Hiç Londra'ya gittin mi?"]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yeni bir ev satın aldılar.", "reference_translation": "They have bought a new house.", "alternatives": ["They've bought a new house."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I have already seen that movie.", "reference_translation": "O filmi zaten gördüm.", "alternatives": ["O filmi çoktan izledim."]}
+  ],
+  "A2.17": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "2020'de İtalya'yı ziyaret ettim.", "reference_translation": "I visited Italy in 2020.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Daha önce hiç suşi yemedim.", "reference_translation": "I have never eaten sushi before.", "alternatives": ["I've never eaten sushi before."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Did you see Tom yesterday?", "reference_translation": "Dün Tom'u gördün mü?", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Dün gece anahtarımı kaybettim.", "reference_translation": "I lost my key last night.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I haven't seen him this week.", "reference_translation": "Bu hafta onu görmedim.", "alternatives": []}
+  ],
+  "A2.18": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Beş yıldır burada yaşıyorum.", "reference_translation": "I have lived here for five years.", "alternatives": ["I have been living here for five years."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Pazartesiden beri hastayım.", "reference_translation": "I have been sick since Monday.", "alternatives": ["I've been ill since Monday."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "She has worked at this company for ten years.", "reference_translation": "On yıldır bu şirkette çalışıyor.", "alternatives": ["Bu şirkette on yıldır çalışmaktadır."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Sabahtan beri bir şey yemedim.", "reference_translation": "I haven't eaten anything since morning.", "alternatives": ["I have not eaten anything since morning."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "How long have you known him?", "reference_translation": "Onu ne kadar süredir tanıyorsun?", "alternatives": []}
+  ],
+  "A2.19": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Yarın yağmur yağabilir.", "reference_translation": "It may rain tomorrow.", "alternatives": ["It might rain tomorrow.", "It could rain tomorrow."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Partiye gelemeyebilir.", "reference_translation": "He might not come to the party.", "alternatives": ["She might not come to the party."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "They could be at home now.", "reference_translation": "Şu an evde olabilirler.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Bu haber doğru olabilir.", "reference_translation": "This news may be true.", "alternatives": ["This news could be true."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Where might she be?", "reference_translation": "Nerede olabilir?", "alternatives": []}
+  ],
+  "A2.20": [
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Lütfen ışığı aç.", "reference_translation": "Please turn on the light.", "alternatives": ["Turn on the light, please."]},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Ceketini çıkar.", "reference_translation": "Take off your jacket.", "alternatives": []},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "I wake up at seven every day.", "reference_translation": "Her gün saat yedide uyanırım.", "alternatives": []},
+    {"source_lang": "tr", "target_lang": "en", "question_text": "Asla pes etme.", "reference_translation": "Never give up.", "alternatives": ["Don't give up."]},
+    {"source_lang": "en", "target_lang": "tr", "question_text": "Look up this word in the dictionary.", "reference_translation": "Bu kelimeye sözlükten bak.", "alternatives": []}
+  ]
+}
+

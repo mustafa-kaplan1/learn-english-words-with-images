@@ -1,4 +1,4 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getGrammarLibrary } from "../api/endpoints";
 import "../styles/grammar.css";
@@ -10,6 +10,8 @@ const STAGE_FILTERS = [
   { key: "good", label: "İyi Bildiğim (6-9)" },
   { key: "mastered", label: "Tamamlandı (10)" },
 ];
+
+const LEVEL_TABS = ["ALL", "A1", "A2", "B1", "B2", "C1"];
 
 export default function GrammarLibrary() {
   const navigate = useNavigate();
@@ -30,8 +32,11 @@ export default function GrammarLibrary() {
 
   if (loading) return <div className="loading">Kitaplık yükleniyor...</div>;
   if (error) return <div className="loading" style={{ color: "var(--danger)" }}>{error}</div>;
+  if (!data) return null;
 
-  const { counts, level_stats, topics } = data;
+  const counts = data.counts || data.stage_counts || { all: 0, unknown: 0, learning: 0, good: 0, mastered: 0 };
+  const level_stats = data.level_stats || {};
+  const topics = data.topics || [];
 
   const filteredTopics = topics.filter((t) => {
     const matchesStage = activeFilter === "all" || t.stage === activeFilter;
@@ -49,6 +54,7 @@ export default function GrammarLibrary() {
         </p>
       </div>
 
+      {/* Genel İlerleme Kartları */}
       <div className="wl-done-stats-grid" style={{ marginBottom: "1.5rem" }}>
         <div className="wl-stat-card" style={{ borderTop: "3px solid #64748b" }}>
           <div className="wl-stat-num">{counts.all}</div>
@@ -75,6 +81,7 @@ export default function GrammarLibrary() {
         </div>
       </div>
 
+      {/* Seviye Bazlı Tamamlanma Çubukları */}
       <div className="gm-controls" style={{ flexDirection: "column", alignItems: "stretch", gap: "0.8rem" }}>
         <span style={{ fontSize: "0.85rem", fontWeight: 700, color: "var(--text-muted)" }}>
           SEVİYE BAZLI TAMAMLANMA:
@@ -97,6 +104,20 @@ export default function GrammarLibrary() {
         </div>
       </div>
 
+      {/* Seviye Sekmeleri */}
+      <div className="gm-tabs" style={{ marginBottom: "1rem" }}>
+        {LEVEL_TABS.map((lvl) => (
+          <button
+            key={lvl}
+            className={`gm-tab-btn ${selectedLevel === lvl ? "active" : ""}`}
+            onClick={() => setSelectedLevel(lvl)}
+          >
+            {lvl === "ALL" ? "Tüm Seviyeler" : lvl}
+          </button>
+        ))}
+      </div>
+
+      {/* Aşama Sekmeleri (Tümü, Bilmediğim, vs.) */}
       <div className="wl-done-tabs" style={{ marginBottom: "1rem" }}>
         {STAGE_FILTERS.map((f) => (
           <button
@@ -104,11 +125,12 @@ export default function GrammarLibrary() {
             className={`wl-tab-btn ${activeFilter === f.key ? "active" : ""}`}
             onClick={() => setActiveFilter(f.key)}
           >
-            {f.label} ({f.key === "all" ? counts.all : counts[f.key]})
+            {f.label} ({f.key === "all" ? counts.all : counts[f.key] || 0})
           </button>
         ))}
       </div>
 
+      {/* Konu Listesi */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
         {filteredTopics.map((t) => (
           <div
